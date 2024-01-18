@@ -13,6 +13,8 @@ public class BreakContinue {
             }
         }
     }
+//    good link to remember concatenation between strings and numbers:
+//    https://stackoverflow.com/questions/12028779/concatenating-string-and-numbers-java
     public static void main(String[] args) {
         int[] a = {1, 2, -3, 4, 5, 4};
         int n = 3;
