@@ -1,7 +1,6 @@
 package game2048;
 
-import java.util.Formatter;
-import java.util.Observable;
+import java.util.*;
 
 
 /** The state of a game of 2048.
@@ -137,7 +136,25 @@ public class Model extends Observable {
      *  Empty spaces are stored as null.
      * */
     public static boolean emptySpaceExists(Board b) {
-        // TODO: Fill in this function.
+        // return true if any of the tiles in the given board are null
+        //utilize tile(int col, int row) and size() methods of board class
+        //want to iterate through the multidimentional array
+        //use nested for loop to iterate through all the rows and columns
+        for (int row = b.size() - 1; row >= 0; row-- ) {
+            for (int col = 0; col < b.size(); col++) {
+                //remember to start from the bottom right of the board
+//                [[0, 0, 0],
+//                [0, 0, 0],
+//                [0, 0, 0],
+                //want to access the current tile starting from the bottom
+                //tile method returns null if there is no tile there
+                Tile tile = b.tile(row, col);
+                System.out.println(tile);
+                if(tile == null) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -147,7 +164,23 @@ public class Model extends Observable {
      * given a Tile object t, we get its value with t.value().
      */
     public static boolean maxTileExists(Board b) {
-        // TODO: Fill in this function.
+        for (int row = b.size() - 1; row >= 0; row-- ) {
+            for (int col = 0; col < b.size(); col++) {
+                //remember to start from the bottom right of the board
+//                [[0, 0, 0],
+//                [0, 0, 0],
+//                [0, 0, 0],
+                //want to access the current tile starting from the bottom
+                //tile method returns null if there is no tile there
+                Tile tile = b.tile(row, col);
+                if(tile == null) {
+                    continue;
+                }
+                if(tile.value() == MAX_PIECE ) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
