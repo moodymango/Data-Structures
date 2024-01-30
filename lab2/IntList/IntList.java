@@ -30,10 +30,18 @@ public class IntList {
 
     /** Returns the ith item of this IntList. */
     public int get(int i) {
-        if (i == 0) {
-            return first;
+        //create a variable that represents how far down we are in the ll
+        int count = 0;
+        //create curr pointer to hold reference point to curr node starting at the head
+        IntList curr = this;
+        while (curr != null) {
+            if (count == i) {
+                return curr.first;
+            }
+            count++;
+            curr = curr.rest;
         }
-        return rest.get(i - 1);
+        return -1;
     }
 
     /** Method to return a string representation of an IntList */
@@ -63,5 +71,5 @@ public class IntList {
         int[] restList = new int[argList.length - 1];
         System.arraycopy(argList, 1, restList, 0, argList.length - 1);
         return new IntList(argList[0], IntList.of(restList));
-    }
+    };
 }
