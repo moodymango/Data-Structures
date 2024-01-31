@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class ArithmeticTest {
-
+//all tests must be non-static
     /** Performs a few arbitrary tests to see if the product method is
      * correct */
     @Test
@@ -23,7 +23,7 @@ public class ArithmeticTest {
     /** Performs a few arbitrary tests to see if the sum method is correct */
     @Test
     public void testSum() {
-
+//follows format assetEquals(<expected>, <actual>);
         assertEquals(11, Arithmetic.sum(5, 6));
         assertEquals(-1, Arithmetic.sum(5, -6));
         assertEquals(-6, Arithmetic.sum(0, -6));

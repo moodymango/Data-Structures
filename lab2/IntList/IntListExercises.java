@@ -9,6 +9,7 @@ public class IntListExercises {
      * @param lst IntList from Lecture
      */
     public static void addConstant(IntList lst, int c) {
+        //function is not reaching the last node
         IntList head = lst;
         while (head.rest != null) {
             head.first += c;
