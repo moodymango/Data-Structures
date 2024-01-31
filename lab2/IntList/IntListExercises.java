@@ -1,5 +1,7 @@
 package IntList;
 
+import edu.princeton.cs.algs4.StdOut;
+
 public class IntListExercises {
 
     /**
@@ -11,7 +13,7 @@ public class IntListExercises {
     public static void addConstant(IntList lst, int c) {
         //function is not reaching the last node
         IntList head = lst;
-        while (head.rest != null) {
+        while (head != null) {
             head.first += c;
             head = head.rest;
         }
@@ -27,9 +29,11 @@ public class IntListExercises {
     public static void setToZeroIfMaxFEL(IntList L) {
         IntList p = L;
         while (p != null) {
-            if (firstDigitEqualsLastDigit(max(p))) {
-                p.first = 0;
-            }
+           int currentMax = max(p);
+           boolean firstEqualsLast = firstDigitEqualsLastDigit(currentMax);
+           if(firstEqualsLast) {
+               p.first = 0;
+           }
             p = p.rest;
         }
     }
@@ -52,7 +56,7 @@ public class IntListExercises {
      */
     public static boolean firstDigitEqualsLastDigit(int x) {
         int lastDigit = x % 10;
-        while (x > 10) {
+        while (x >= 10) {
             x = x / 10;
         }
         int firstDigit = x % 10;
@@ -77,7 +81,16 @@ public class IntListExercises {
         if (currElemIsPrime) {
             lst.first *= lst.first;
         }
-
-        return currElemIsPrime || squarePrimes(lst.rest);
+    //returns out of the ll too early, still needs to iterate through the entire linked list
+    //check if the next value of the LL is prime as well
+        if(lst.rest != null) {
+            return squarePrimes(lst.rest);
+        }
+        return currElemIsPrime;
+    }
+    public static void main(String[] args) {
+        IntList lst = IntList.of(7, 11, 7, 11, 13);
+        boolean wasSquared = squarePrimes(lst);
+        System.out.println("current linked list is" + lst);
     }
 }
