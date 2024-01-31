@@ -31,6 +31,14 @@ public class SquarePrimesTest {
         assertTrue(changed);
     }
     @Test
+    public void testSquarePrimesZeros() {
+        IntList lst = IntList.of( 0, 0, 7);
+        boolean changed = IntListExercises.squarePrimes(lst);
+        assertEquals("0 -> 0 -> 49", lst.toString());
+        assertTrue(changed);
+    }
+
+    @Test
     public void testSquarePrimesAllComposites() {
         IntList lst = IntList.of(4, 6, 8, 12, 14);
         boolean changed = IntListExercises.squarePrimes(lst);

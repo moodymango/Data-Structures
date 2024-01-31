@@ -81,15 +81,12 @@ public class IntListExercises {
         if (currElemIsPrime) {
             lst.first *= lst.first;
         }
-    //returns out of the ll too early, still needs to iterate through the entire linked list
-    //check if the next value of the LL is prime as well
-        if(lst.rest != null) {
-            return squarePrimes(lst.rest);
-        }
-        return currElemIsPrime;
+
+        return squarePrimes(lst.rest) || currElemIsPrime;
+
     }
     public static void main(String[] args) {
-        IntList lst = IntList.of(7, 11, 7, 11, 13);
+        IntList lst = IntList.of( 2, 3, 7, 11, 13);
         boolean wasSquared = squarePrimes(lst);
         System.out.println("current linked list is" + lst);
     }
