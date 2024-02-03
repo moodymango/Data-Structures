@@ -113,13 +113,48 @@ public class Model extends Observable {
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
 
+        //tilting Up
+        //pieces below top row can move up if the space above has the same value or is empty
+            //iterate from row 3 down
+        //can only move on a given tile once
+        //create helper function that processes each column and moves the tile up by column
+
+
         checkGameOver();
         if (changed) {
             setChanged();
         }
         return changed;
     }
+//    shifts the positions of the tiles by column
+    public void tiltByColumn (int col, Board b) {
+        //create a local variable merged to check if a merge has been completed in this column already
+        boolean merged = false;
+        //create a local object to keep track of the moved tiles in the column, starting with the initial order of the tiles
+        Tile [] columnOrder = new Tile [4];
+        int size = b.size() - 1;
+        while (size >= 0 ) {
+            columnOrder[size] = b.tile(col, size);
+        }
+        //save the value of the tile in the uppermost row (row 3)
+        Tile upperMost = b.tile(col, b.size() - 1);
+        //start loop at the row beneath uppermost row (row 2)
+        int row = b.size() - 2;
+        //loop while row is greater than or equal to zero
+        while (row >= 0) {
+            Tile currTile = b.tile(col, row);
+          //maybe use another helper function to determine how many spaces to move each individual tile
 
+        }
+    }
+//   returns the number of rows an individual tile must move
+    public int moveTileBynSpaces(Tile t, Tile[] tileOrder, Board b) {
+        //determines how each individual tile will move across the board
+        //want to make two checks
+        //1 if the tiles above are equal to the currTile
+
+        //2 if there are null tiles above the current tile
+    }
     /** Checks if the game is over and sets the gameOver variable
      *  appropriately.
      */
@@ -200,7 +235,6 @@ public class Model extends Observable {
             return true;
         }
         //2. there are two adjacent tiles with the same value
-        //how do we check if there are two adjacent tiles with the same value?
         //as we iterate through the multidimesional array, we have to check the neighboring values of the current tile
         //start loop from the bottom left corner
         for(int row = b.size() - 1; row >= 0; row--) {
