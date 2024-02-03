@@ -148,7 +148,7 @@ public class Model extends Observable {
 //                [0, 0, 0],
                 //want to access the current tile starting from the bottom
                 //tile method returns null if there is no tile there
-                Tile tile = b.tile(row, col);
+                Tile tile = b.tile(col, row);
                 System.out.println(tile);
                 if(tile == null) {
                     return true;
@@ -172,7 +172,7 @@ public class Model extends Observable {
 //                [0, 0, 0],
                 //want to access the current tile starting from the bottom
                 //tile method returns null if there is no tile there
-                Tile tile = b.tile(row, col);
+                Tile tile = b.tile(col, row);
                 if(tile == null) {
                     continue;
                 }
@@ -191,9 +191,72 @@ public class Model extends Observable {
      * 2. There are two adjacent tiles with the same value.
      */
     public static boolean atLeastOneMoveExists(Board b) {
-        // TODO: Fill in this function.
+       //two ways for there to be a valid move;
+        //1. there is at least one empty space on the board
+        //can simply call emptySpace Exists on Board b for the first condition
+        boolean emptySpace = emptySpaceExists(b);
+        //if the boolean empty space returns true, then return true
+        if (emptySpace) {
+            return true;
+        }
+        //2. there are two adjacent tiles with the same value
+        //how do we check if there are two adjacent tiles with the same value?
+        //as we iterate through the multidimesional array, we have to check the neighboring values of the current tile
+        //start loop from the bottom left corner
+        for(int row = b.size() - 1; row >= 0; row--) {
+            for (int col = 0; col < b.size(); col++) {
+                //for each of the values in the array, we must check the neighboring elements
+                //upper element will be same column, row - 1;
+                //right el will be same row, column + 1;
+                //bottom el will be same column, row + 1
+                //left e1 will be same row, column - 1
+                Tile currTile = b.tile(col, row);
+                //if the current tile is not null,
+                if (currTile != null) {
+                    //start checking the index of the neigboring tiles to ensure they are within board bounds
+                    Tile upperTile = tileIdxWithinBound(col,row - 1, b);
+                    Tile rightTile = tileIdxWithinBound(col + 1, row, b);
+                    Tile lowerTile = tileIdxWithinBound(col, row + 1, b);
+                    Tile leftTile = tileIdxWithinBound(col - 1, row, b);
+                    // now we check the values of each tile to see if the value of the current tile is equal to value of the neighboring tiles
+                    Tile [] neighborTiles = {upperTile, rightTile, lowerTile, leftTile};
+                    //pass in tile array to helper function to check tile values
+                    boolean equalNeighbors = checkNeighborTileVal(neighborTiles, currTile);
+                    if (equalNeighbors) {
+                        return true;
+                    }
+
+                }
+
+            }
+        }
         return false;
     }
+ /*   checks if neighboring elements are within the elements of the board and returns the neighboring tile */
+    public static Tile tileIdxWithinBound (int col, int row, Board b) {
+        //return null if the tile is out of bounds;
+        if ((col >=0 && col < b.size()) && (row >=0 && row < b.size())) {
+            //if indices are within bound, return the neighboring tiles
+           Tile neighbor = b.tile(col, row);
+           return neighbor;
+        }
+        return null;
+    }
+    public static boolean checkNeighborTileVal (Tile[] neighbors, Tile mainTile) {
+        //iterate through the array of tiles, comparing the values of the neighboring tiles to the mainTile
+        int i = 0;
+        while (i < neighbors.length) {
+            Tile neighbor = neighbors[i];
+            if (neighbor != null) {
+                if (mainTile.value() == neighbor.value()) {
+                    return true;
+                }
+            }
+            i++;
+        }
+        return false;
+    }
+
 
 
     @Override
