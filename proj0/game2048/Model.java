@@ -113,47 +113,89 @@ public class Model extends Observable {
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
 
-        //tilting Up
-        //pieces below top row can move up if the space above has the same value or is empty
-            //iterate from row 3 down
-        //can only move on a given tile once
-        //create helper function that processes each column and moves the tile up by column
-
-
+    //loop by column, starting with the leftmost column which starts at columns 0
+    for (int col = board.size() - 1; col >=0 ; col--) {
+        //for each column, I want to call the tiltByColumn method
+        //since tiltByColumn returns a local score, we add the evaluated result of the function invocation to the score variable
+        score += tiltByColumn(col, board);
+        changed = true;
+    }
         checkGameOver();
         if (changed) {
             setChanged();
         }
         return changed;
     }
-//    shifts the positions of the tiles by column
-    public void tiltByColumn (int col, Board b) {
-        //create a local variable merged to check if a merge has been completed in this column already
+/* shifts the positions of the tiles by column*/
+    public int tiltByColumn (int col, Board b) {
+        //create a variable merged that keeps track of whether or not a merge is already capable and has already taken place
         boolean merged = false;
-        //create a local object to keep track of the moved tiles in the column, starting with the initial order of the tiles
-        Tile [] columnOrder = new Tile [4];
-        int size = b.size() - 1;
-        while (size >= 0 ) {
-            columnOrder[size] = b.tile(col, size);
-        }
-        //save the value of the tile in the uppermost row (row 3)
-        Tile upperMost = b.tile(col, b.size() - 1);
-        //start loop at the row beneath uppermost row (row 2)
+        //create local variable that keeps track of the score for this column
+        int localScore = 0;
+        //start loop at the second row
         int row = b.size() - 2;
         //loop while row is greater than or equal to zero
         while (row >= 0) {
             Tile currTile = b.tile(col, row);
+            if(currTile == null) {
+                row--;
+                continue;
+            }
           //maybe use another helper function to determine how many spaces to move each individual tile
-
+          int jumpRows = moveTileBynSpaces(currTile, b);
+          //call b.move with the number of jumpRows, and will return out a boolean
+            //if merged is truthy, we already have a merged in the column, and should decrement the jumpRows variable by 1
+            if(merged) {
+                jumpRows--;
+            }
+           boolean didMerge =  b.move(col, jumpRows + row, currTile);
+           //if the boolean didMerge is true, then we take the value of the current tile, double it, and add it to local score
+            if (didMerge) {
+                //need to check the tile
+                int tileVal = currTile.value() * 2;
+                localScore += tileVal;
+                merged = true;
+            }
+            //DOES THE MOVE FUNCTION TURN THE CURRTILE INTO A NULL VALUE? IF NOT, THEN WE MUST REASSIGN THE POINTER OF CURR TILE TO NULL;
+            //decrement row to keep the loop going
+            row--;
         }
+        return localScore;
     }
-//   returns the number of rows an individual tile must move
-    public int moveTileBynSpaces(Tile t, Tile[] tileOrder, Board b) {
+/* returns the number of rows an individual tile must move*/
+    public int moveTileBynSpaces(Tile t, Board b) {
         //determines how each individual tile will move across the board
         //want to make two checks
         //1 if the tiles above are equal to the currTile
-
         //2 if there are null tiles above the current tile
+        boolean merged = false;
+        //create a variable spaces that represents the number of rows that the tile should move
+        int spacesJumped = 0;
+        //use current row as index to traverse all tiles above the curr tile
+        int row = t.row();
+        int col = t.col();
+            //create loop that iterates from the current row + 1 to the b.size()
+            for (int i = row + 1; i < b.size(); i++) {
+                //check the value of the curr tile compared to all the tiles above it
+                Tile aboveTile = b.tile(col, i);
+                //if the curr tile does not exist, we can move the tile up one, so we increment the spaces jumped variable by 1
+                if (aboveTile == null) {
+                    //increment spaces jumped
+                    spacesJumped++;
+                } else {
+                    //if the current tile has an equal value to the one above
+                    if (aboveTile.value() == t.value()) {
+                        //if a merge has not been performed already, we can simply increment spaces jumped and reassign boolean to true;
+                        if (!merged) {
+                            spacesJumped++;
+                            merged = true;
+                        }
+                        //else a merge has already been performed and we do not want to increment the spaces jumped variable
+                    }
+                }
+
+            }
+            return spacesJumped;
     }
     /** Checks if the game is over and sets the gameOver variable
      *  appropriately.
@@ -270,7 +312,7 @@ public class Model extends Observable {
     public static Tile tileIdxWithinBound (int col, int row, Board b) {
         //return null if the tile is out of bounds;
         if ((col >=0 && col < b.size()) && (row >=0 && row < b.size())) {
-            //if indices are within bound, return the neighboring tiles
+            //if indices are within bound, return the neighboring tile
            Tile neighbor = b.tile(col, row);
            return neighbor;
         }
