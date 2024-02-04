@@ -121,7 +121,7 @@ public class Model extends Observable {
         if (changed) {
             setChanged();
         }
-        board.setViewingPerspective(side.NORTH);
+        board.setViewingPerspective(Side.NORTH);
         return changed;
     }
 /* shifts the positions of the tiles by column*/
@@ -140,7 +140,7 @@ public class Model extends Observable {
                 continue;
             }
           //maybe use another helper function to determine how many spaces to move each individual tile
-          int jumpRows = moveTileBynSpaces(currTile, b);
+            int jumpRows = moveTileBynSpaces(row, col, b);
             //if a merge tile exists, we want to check if the value of the current tile is equal to the saved Tile
             if(merged != null) {
                 if (currTile.value() == merged.value()) {
@@ -164,32 +164,35 @@ public class Model extends Observable {
         return localScore;
     }
 /* returns the number of rows an individual tile must move*/
-    public int moveTileBynSpaces(Tile t, Board b) {
-        //want to make two checks
-        //1 if the tiles above are equal to the currTile
-        //2 if there are null tiles above the current tile
-        //create a variable spaces that represents the number of rows that the tile should move
-        int spacesJumped = 0;
-        //use current row as index to traverse all tiles above the curr tile
-        int row = t.row();
-        int col = t.col();
-            //create loop that iterates from the current row + 1 to the b.size()
-            for (int i = row + 1; i < b.size(); i++) {
-                //check the value of the curr tile compared to all the tiles above it
-                Tile aboveTile = b.tile(col, i);
-                //if the curr tile does not exist, we can move the tile up one, so we increment the spaces jumped variable by 1
-                if (aboveTile == null) {
-                    //increment spaces jumped
-                    spacesJumped++;
-                } else {
-                    //if the current tile has an equal value to the one above, increment spaces jumped
-                    if (aboveTile.value() == t.value()) {
-                        spacesJumped++;
-                    }
-                }
+public int moveTileBynSpaces(int row, int col, Board b) {
+    //board should be behaving as if East is north but is giving the wrong row?
+    //want to make two checks
+    //1 if the tiles above are equal to the currTile
+    //2 if there are null tiles above the current tile
+    //create a variable spaces that represents the number of rows that the tile should move
+    int spacesJumped = 0;
+    //use current row as index to traverse all tiles above the curr tile
+    int localRow = row;
+    int localCol = col;
+    //orientation of the top row should ideally change but for some reason it's not, current tile should be (2, 2) but it is (2,1 instead);
+    //create loop that iterates from the current row + 1 to the b.size()
+    for (int i = localRow + 1; i < b.size(); i++) {
+        //check the value of the curr tile compared to all the tiles above it
+        Tile t = b.tile(col, row);
+        Tile aboveTile = b.tile(col, i);
+        //if the curr tile does not exist, we can move the tile up one, so we increment the spaces jumped variable by 1
+        if (aboveTile == null) {
+            //increment spaces jumped
+            spacesJumped++;
+        } else {
+            //if the current tile has an equal value to the one above, increment spaces jumped
+            if (aboveTile.value() == t.value()) {
+                spacesJumped++;
             }
-            return spacesJumped;
+        }
     }
+    return spacesJumped;
+}
     /** Checks if the game is over and sets the gameOver variable
      *  appropriately.
      */
