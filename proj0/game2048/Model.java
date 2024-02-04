@@ -108,11 +108,8 @@ public class Model extends Observable {
     public boolean tilt(Side side) {
         boolean changed;
         changed = false;
-
-        // TODO: Modify this.board (and perhaps this.score) to account
-        // for the tilt to the Side SIDE. If the board changed, set the
-        // changed local variable to true.
-
+    //set the viewing perspective of the board depending on the side of the board
+        board.setViewingPerspective(side);
     //loop by column, starting with the leftmost column which starts at columns 0
     for (int col = board.size() - 1; col >=0 ; col--) {
         //for each column, I want to call the tiltByColumn method
@@ -124,12 +121,13 @@ public class Model extends Observable {
         if (changed) {
             setChanged();
         }
+        board.setViewingPerspective(side.NORTH);
         return changed;
     }
 /* shifts the positions of the tiles by column*/
     public int tiltByColumn (int col, Board b) {
         //create a variable merged that keeps track of whether or not a merge is already capable and has already taken place
-        boolean merged = false;
+        Tile merged = null;
         //create local variable that keeps track of the score for this column
         int localScore = 0;
         //start loop at the second row
@@ -143,20 +141,23 @@ public class Model extends Observable {
             }
           //maybe use another helper function to determine how many spaces to move each individual tile
           int jumpRows = moveTileBynSpaces(currTile, b);
-          //call b.move with the number of jumpRows, and will return out a boolean
-            //if merged is truthy, we already have a merged in the column, and should decrement the jumpRows variable by 1
-            if(merged) {
-                jumpRows--;
+            //if a merge tile exists, we want to check if the value of the current tile is equal to the saved Tile
+            if(merged != null) {
+                if (currTile.value() == merged.value()) {
+                    //want to decrement the jump rows number by 1 because we dont want the tiles to merge
+                    jumpRows--;
+                }
             }
+          //call b.move with the number of jumpRows, and will return out a boolean
            boolean didMerge =  b.move(col, jumpRows + row, currTile);
            //if the boolean didMerge is true, then we take the value of the current tile, double it, and add it to local score
             if (didMerge) {
-                //need to check the tile
+                //need to grab the tile's value;
                 int tileVal = currTile.value() * 2;
                 localScore += tileVal;
-                merged = true;
+                //assign local merged the value of the merged tile
+                merged = b.tile(col, jumpRows + row);
             }
-            //DOES THE MOVE FUNCTION TURN THE CURRTILE INTO A NULL VALUE? IF NOT, THEN WE MUST REASSIGN THE POINTER OF CURR TILE TO NULL;
             //decrement row to keep the loop going
             row--;
         }
@@ -164,11 +165,9 @@ public class Model extends Observable {
     }
 /* returns the number of rows an individual tile must move*/
     public int moveTileBynSpaces(Tile t, Board b) {
-        //determines how each individual tile will move across the board
         //want to make two checks
         //1 if the tiles above are equal to the currTile
         //2 if there are null tiles above the current tile
-        boolean merged = false;
         //create a variable spaces that represents the number of rows that the tile should move
         int spacesJumped = 0;
         //use current row as index to traverse all tiles above the curr tile
@@ -183,17 +182,11 @@ public class Model extends Observable {
                     //increment spaces jumped
                     spacesJumped++;
                 } else {
-                    //if the current tile has an equal value to the one above
+                    //if the current tile has an equal value to the one above, increment spaces jumped
                     if (aboveTile.value() == t.value()) {
-                        //if a merge has not been performed already, we can simply increment spaces jumped and reassign boolean to true;
-                        if (!merged) {
-                            spacesJumped++;
-                            merged = true;
-                        }
-                        //else a merge has already been performed and we do not want to increment the spaces jumped variable
+                        spacesJumped++;
                     }
                 }
-
             }
             return spacesJumped;
     }
