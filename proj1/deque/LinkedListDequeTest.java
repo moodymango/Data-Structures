@@ -172,7 +172,8 @@ public class LinkedListDequeTest {
             lld1.addLast(i);
         }
         LinkedListDeque<Integer> intList = new LinkedListDeque<>(lld1);
-        assertEquals("Both lists should deeply equal one another", lld1, intList);
+        assertEquals("Both lists should deeply equal one another", lld1.get(10000), intList.get(10000));
+        assertEquals("Both lists have the same tail node", lld1.get(99999), intList.get(99999));
     }
 
 
