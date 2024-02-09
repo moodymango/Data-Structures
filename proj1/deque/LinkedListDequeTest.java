@@ -14,7 +14,6 @@ public class LinkedListDequeTest {
      * && is the "and" operation. */
     public void addIsEmptySizeTest() {
 
-        System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
         LinkedListDeque<String> lld1 = new LinkedListDeque<String>();
 
 		assertTrue("A newly initialized LLDeque should be empty", lld1.isEmpty());
@@ -39,7 +38,6 @@ public class LinkedListDequeTest {
     /** Adds an item, then removes an item, and ensures that dll is empty afterwards. */
     public void addRemoveTest() {
 
-        System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
         LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
 		// should be empty
 		assertTrue("lld1 should be empty upon initialization", lld1.isEmpty());
@@ -57,7 +55,6 @@ public class LinkedListDequeTest {
     /* Tests removing from an empty deque */
     public void removeEmptyTest() {
 
-        System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
         LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
         lld1.addFirst(3);
 
@@ -95,7 +92,6 @@ public class LinkedListDequeTest {
     /* check if null is return when removing from an empty LinkedListDeque. */
     public void emptyNullReturnTest() {
 
-        System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
         LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
 
         boolean passed1 = false;
@@ -109,7 +105,6 @@ public class LinkedListDequeTest {
     /* Add large number of elements to deque; check if order is correct. */
     public void bigLLDequeTest() {
 
-        System.out.println("Make sure to uncomment the lines below (and delete this print statement).");
         LinkedListDeque<Integer> lld1 = new LinkedListDeque<Integer>();
         for (int i = 0; i < 1000000; i++) {
             lld1.addLast(i);
@@ -124,4 +119,53 @@ public class LinkedListDequeTest {
         }
 
     }
+    @Test
+    public void removesFirstMultiple() {
+        LinkedListDeque<String> strList = new LinkedListDeque<>();
+        String [] testArr = {"This", "is", "just", "a", "test", "ya-dig?"};
+        for (int i =0; i<testArr.length; i++) {
+            strList.addLast(testArr[i]);
+        }
+        String s1 = strList.removeFirst();
+        String s2 = strList.removeFirst();
+
+        assertEquals("Should return the first node in the linkedList", s1, testArr[0]);
+        assertEquals("Should return the first node in the linkedList", s2, testArr[1]);
+    }
+    @Test
+    public void removeLastMultiple() {
+        LinkedListDeque<String> strList = new LinkedListDeque<>();
+        String [] testArr = {"This", "is", "just", "a", "test", "ya-dig?"};
+        for (int i =0; i<testArr.length; i++) {
+            strList.addLast(testArr[i]);
+        }
+        String s1 = strList.removeLast();
+        String s2 = strList.removeLast();
+
+    assertEquals("Should return the first node in the linkedList", s1, testArr[5]);
+    assertEquals("Should return the first node in the linkedList", s2, testArr[4]);
+    }
+    @Test
+    public void getValIterative() {
+        LinkedListDeque<String> strList = new LinkedListDeque<>();
+        String [] testArr = {"This", "is", "just", "a", "test", "ya-dig?"};
+        for (int i =0; i<testArr.length; i++) {
+            strList.addLast(testArr[i]);
+        }
+        String s1 = strList.get(3);
+        assertEquals("Should return the 4th element in the test linkedlist", s1, testArr[3]);
+    }
+    @Test
+    public void getValRecursive() {
+        LinkedListDeque<String> strList = new LinkedListDeque<>();
+        String [] testArr = {"This", "is", "just", "a", "test", "ya-dig?"};
+        for (int i =0; i<testArr.length; i++) {
+            strList.addLast(testArr[i]);
+        }
+        String s1 = strList.getRecursive(3);
+        assertEquals("Should return the 4th element in the test linkedlist", s1, testArr[3]);
+    }
+
+
+
 }

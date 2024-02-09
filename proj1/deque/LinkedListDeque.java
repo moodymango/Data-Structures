@@ -1,7 +1,7 @@
 package deque;
 /*can implement deque as a stack (Last In, First Out) or queue (First In, First Out)*/
 public class LinkedListDeque <T> {
-/* private static class representing the elements in the list */
+/* private class representing the elements in the list */
     private class Node {
         public T value;
      /* ensure that node has both next and prev variables to create doubly linked list*/
@@ -62,7 +62,8 @@ public class LinkedListDeque <T> {
 /*   checks to see if there are any nodes in our list*/
     public boolean isEmpty() {
         //if the sentinel's.next property is pointing to itself, we have an empty list
-       if (sentinel.next == sentinel) {
+        //if size is zero, we have no nodes
+       if (size == 0) {
            return true;
        }
         return false;
@@ -77,11 +78,14 @@ public class LinkedListDeque <T> {
     //iterate through the deque
         //initiate first node at sentinel.next
         Node currNode = sentinel.next;
+        if (currNode == null) {
+            return;
+        }
         int counter = 0;
         //instantiate array of length size in order to hold values of the deque, with string type since we will print the values as strings
         String[] values = new String[size];
         //while the counter is less than or equal to the size variable
-        while (counter <= size) {
+        while (counter < size) {
             //push stringified values to the array
             values[counter] = currNode.value.toString();
             counter++;
@@ -89,11 +93,15 @@ public class LinkedListDeque <T> {
         }
         System.out.println(String.join(" ", values));
     }
+    /*removes the first node in the deque and returns it's value'*/
     public T removeFirst() {
         //first check if  the deque is empty, if not, remove the first
-        if (!isEmpty()) {
+        if (isEmpty()) {
+            return null;
+        }
             //deque is not empty, which means our currFirst is the next value of the sentinel node
             Node currFirst = sentinel.next;
+            T currVal = currFirst.value;
             //reassign the currFirst's next node to the curr prev node
             currFirst.next.prev = currFirst.prev;
             //reassign the sentinel's next to the currNode's next
@@ -102,17 +110,61 @@ public class LinkedListDeque <T> {
             currFirst.next = currFirst.prev = null;
             //decrement and return size
             size--;
-            return currFirst.value;
+            return currVal;
+    }
+    /*removes the last node in the deque and returns its value*/
+    public T removeLast() {
+        //if the deque is empty, return null
+        Node currNode = sentinel.prev;
+        //if the currNode is the sentinel node, the current node is pointing to itself
+        if (currNode == sentinel) {
+            return null;
+        }
+        //reassign the next value of the node before currNode to point to the sentinel
+        currNode.prev.next = sentinel;
+        //reassign the prev value of the sentinel to the currNode.prev
+        sentinel.prev = currNode.prev;
+        //decrement size
+        size--;
+        //simply return the currNode
+        return currNode.value;
+
+    }
+   /*iteratively gets the item at the given index*/
+    public T get(int idx) {
+        //declare currNode at currNode.next
+        Node currNode = sentinel.next;
+        int count = 0;
+        //use while loop to iterate through the linkedList, keep loop iterating as long as the currNode is not pointing to the sentinel
+        while (currNode != sentinel) {
+            //if the value of the counter is equal to the value of the idx, return the value at the currNode
+            if (idx == count) {
+                return currNode.value;
+            }
+            //else we increment counter by one, and reassign the currNode to currNode.next
+            count++;
+            currNode = currNode.next;
         }
         return null;
     }
-    public T removeLast() {
-        return null;
-    }
-    public T get(int idx) {
-    return null;
-    }
+ /*  recursively gets the value of the node at the desired idx*/
     public T getRecursive(int idx) {
-        return null;
+        Node currNode = sentinel.next;
+        int depth = 0;
+       // @source - recursive pattern found in top answer of following stack overflow query:
+        //https://stackoverflow.com/questions/10567102/how-to-use-an-index-variable-in-a-recursion
+        return getRecursiveHelper(currNode, idx, depth);
+    }
+    private T getRecursiveHelper(Node curr, int idx, int depth) {
+        //depth represents a counter of sorts to help us keep track of where we are in our linked list
+        //if depth is equal to the idx, simply return the value of the node
+        if (curr == sentinel) {
+            return null;
+        }
+        if (depth == idx) {
+            return curr.value;
+        }
+        //otherwise we recursively call the function, passing in the curr.next, idx, and depth++;
+        return getRecursiveHelper(curr.next, idx, ++depth);
     }
 }
