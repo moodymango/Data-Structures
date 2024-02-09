@@ -23,6 +23,28 @@ public class LinkedListDeque <T> {
         sentinel.next = sentinel.prev = sentinel;
         size = 0;
     }
+    /*creates a deep copy of other*/
+    public LinkedListDeque(LinkedListDeque other) {
+        //instantiate a new linked list
+        sentinel = new Node(null);
+        sentinel.prev = sentinel;
+        sentinel.next = sentinel;
+        Node currNew = sentinel;
+        size = 0;
+        //iterate through the other linked list
+        Node currOther = other.sentinel.next;
+        //loop while currOther is not equal to other.sentinel
+        while (currOther != other.sentinel) {
+            //instead of assigning currNew.next the reference to the currOther node, we make a new node passing in currOther's value
+            Node copiedNode = new Node(currOther.value);
+            currNew.next = copiedNode;
+            //assign the prev of the copied node to be currNew
+            copiedNode.prev = currNew;
+            //reassign currNew to be the copied node to continue iterating through our new deque
+            currNew = copiedNode;
+            currOther = currOther.next;
+        }
+    }
  /*   adds new node to the head of the list*/
     public void addFirst(T value) {
         //first value in the doubly linked list is the next node after the sentinel
@@ -167,4 +189,5 @@ public class LinkedListDeque <T> {
         //otherwise we recursively call the function, passing in the curr.next, idx, and depth++;
         return getRecursiveHelper(curr.next, idx, ++depth);
     }
+
 }

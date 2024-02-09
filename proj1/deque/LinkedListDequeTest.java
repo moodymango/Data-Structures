@@ -165,6 +165,15 @@ public class LinkedListDequeTest {
         String s1 = strList.getRecursive(3);
         assertEquals("Should return the 4th element in the test linkedlist", s1, testArr[3]);
     }
+    @Test
+    public void deepCopyConstructor() {
+        LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
+        for (int i = 0; i < 1000000; i++) {
+            lld1.addLast(i);
+        }
+        LinkedListDeque<Integer> intList = new LinkedListDeque<>(lld1);
+        assertEquals("Both lists should deeply equal one another", lld1, intList);
+    }
 
 
 
