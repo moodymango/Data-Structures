@@ -165,4 +165,9 @@ public class ArrayDeque<T> {
 //        }
         return false;
     }
+    private double usageFactor () {
+        //returns a ratio of memory that program ues at any given time according to the number of items
+        int usage = size / items.length;
+        return usage;
+    }
 }

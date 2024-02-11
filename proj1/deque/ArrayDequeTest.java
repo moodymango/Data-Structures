@@ -71,6 +71,40 @@ public class ArrayDequeTest {
     }
     @Test
     public void removeFirst() {
-
+        int [] items = {8,7,6,5,0,0,0,0};
+        ArrayDeque<Integer> testDeque = new ArrayDeque<>();
+        testDeque.addLast(8);
+        testDeque.addLast(7);
+        testDeque.addLast(6);
+        testDeque.addLast(5);
+       int removed = testDeque.removeFirst();
+       assertTrue(removed == 8);
     }
+    @Test
+    public void removeLast() {
+        int [] items = {8,7,6,5,0,0,0,0};
+        ArrayDeque<Integer> testDeque = new ArrayDeque<>();
+        testDeque.addLast(8);
+        testDeque.addLast(7);
+        testDeque.addLast(6);
+        testDeque.addLast(5);
+        int removed = testDeque.removeLast();
+        assertTrue(removed == 5);
+    }
+    @Test
+    public void removeEmpty() {
+        ArrayDeque<Object> testDeque = new ArrayDeque<>();
+        Object removedFirst = testDeque.removeFirst();
+        Object removedLast = testDeque.removeLast();
+        assertTrue(removedFirst == null);
+        assertTrue(removedLast == null);
+    }
+    @Test
+    public void removeOneFirst() {
+        ArrayDeque<Integer> testDeque = new ArrayDeque<>();
+        testDeque.addLast(8);
+        Integer removedFirst = testDeque.removeFirst();
+        assertTrue(removedFirst == 8);
+    }
+
 }
