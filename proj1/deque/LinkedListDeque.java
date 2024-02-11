@@ -40,7 +40,7 @@ public class LinkedListDeque <T> {
             currNew.next = copiedNode;
             //assign the prev of the copied node to be currNew
             copiedNode.prev = currNew;
-            //reassign currNew to be the copied node to continue iterating through our new deque
+            //reassign currNew to the copied node to continue iterating through our new deque
             currNew = copiedNode;
             currOther = currOther.next;
         }
