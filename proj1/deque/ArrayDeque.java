@@ -21,8 +21,16 @@ public class ArrayDeque<T> {
         items = (T[]) new Object[8];
         size = 0;
     }
-    public ArrayDeque(ArrayDeque T) {
-
+   /*creates a deep copy of the other deque*/
+    public ArrayDeque(ArrayDeque other) {
+//        int otherLength = other.items.length;
+//        T[] newItems = (T[]) new Object[otherLength];
+//        int count = 0;
+//        int otherIdx = 0;
+//        //iterate through the other array
+//        for (int i = 0; i < otherLength; i++) {
+//            newItems[count] = other.items[otherIdx];
+//        }
     }
     /*adds item t to the front of the deque*/
     public void addFirst(T item) {
@@ -159,10 +167,6 @@ public class ArrayDeque<T> {
         if (front == rear + 1) {
             return true;
         }
-//        if(rear == front + 1) {
-//            (if)
-//            return true;
-//        }
         return false;
     }
     private double usageFactor () {
