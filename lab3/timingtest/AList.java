@@ -31,10 +31,13 @@ public class AList<Item> {
         items = a;
     }
 
+
     /** Inserts X into the back of the list. */
     public void addLast(Item x) {
         if (size == items.length) {
-            resize(size + 1);
+            double rounded = size * 1.01;
+            int newRound = (int) Math.round(rounded);
+            resize(newRound);
         }
 
         items[size] = x;

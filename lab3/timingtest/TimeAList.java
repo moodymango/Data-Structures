@@ -25,7 +25,7 @@ public class TimeAList {
 
     public static void timeAListConstruction() {
        //instantiate an array of size according to the table
-        int [] sizes = {1000, 2000, 4000, 8000, 16000, 32000, 64000, 120000};
+        int [] sizes = {1000, 2000, 4000, 8000, 16000, 32000, 64000, 128000};
         //instantiate 3 Array lists to pass into print timing table function
         AList<Integer> Ns = new AList<>();
         AList<Double> times = new AList<>();
