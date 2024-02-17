@@ -21,16 +21,15 @@ public class ArrayDeque<T> {
         items = (T[]) new Object[8];
         size = 0;
     }
-   /*creates a deep copy of the other deque*/
+   /*creates a deep copy of  other deque*/
     public ArrayDeque(ArrayDeque other) {
-//        int otherLength = other.items.length;
-//        T[] newItems = (T[]) new Object[otherLength];
-//        int count = 0;
-//        int otherIdx = 0;
-//        //iterate through the other array
-//        for (int i = 0; i < otherLength; i++) {
-//            newItems[count] = other.items[otherIdx];
-//        }
+        //create an empty array with the same size of the other array and assign it to newCopy.items
+        this.items = (T[]) new Object[other.size];
+        this.size = other.size;
+        this.front = other.front;
+        this.rear = other.rear;
+        //could simply use System Copy?
+        System.arraycopy(other.items, 0, this.items, 0, other.size);
     }
     /*adds item t to the front of the deque*/
     public void addFirst(T item) {
