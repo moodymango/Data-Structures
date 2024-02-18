@@ -110,11 +110,12 @@ public class ArrayDeque<T> {
             T removed = items[front];
             items[front] = null;
             front = rear = -1;
-            size--;
+            size = 0;
             return removed;
         } else {
             //if front is equal to the array.size -1, reassign front to 0 and increment by 1
             T removed = items[front];
+            items[front] = null;
             if (front == items.length - 1) {
                 front = 0;
             } else {
@@ -132,12 +133,14 @@ public class ArrayDeque<T> {
         } else if(front == rear) {
             //else if there is only one element in the array, we save the value of the array , reassign front and -1 to 0, and decrement size, return deleted item
             T removed = items[rear];
+            items[rear] = null;
             front = rear = -1;
-            size--;
+            size = 0;
             return removed;
         } else {
             //else we have more than 1 el in our arr
             T removed = items[rear];
+            items[rear] = null;
             //if we have reached the limit of our array (0), we point rear at size - 1;
             if (rear == 0) {
                 rear = items.length - 1;
