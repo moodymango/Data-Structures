@@ -177,6 +177,7 @@ public class ArrayDeque<T> {
                 size--;
                 //return deleted
             }
+            //after removing the element, make the array smaller if necessary
             if (sizeSmaller()) {
                 //calculate resize capacity
                 double capacity = items.length / 2;
@@ -195,16 +196,11 @@ public class ArrayDeque<T> {
         //round the capacity to the closest int
         int rounded = (int) Math.round(capacity);
         T[] newItems = (T[]) new Object[rounded];
-        //if rounded is smaller than the current length of items, need to reassign the front and rear bounds
-        if (rounded < items.length) {
-            for (int i = 0; i <= rear; i = (i +1) % newItems.length) {
-                newItems[i] = items[i];
-            }
-        }
         for (int i = front; i <= rear; i = (i +1) % items.length) {
             newItems[i] = items[i];
         }
         items = newItems;
+        front = 0;
     }
     private void resize(double capacity) {
         //create new array with the size capacity
@@ -230,12 +226,15 @@ public class ArrayDeque<T> {
     }
     //returns a ratio of memory that program ues at any given time according to the number of items
     private double usageFactor () {
-        int usage = size / items.length;
+        System.out.println("calculating usage factor, size, length " + size + " " + items.length );
+        double usage = (double) size / items.length;
         return usage;
     }
    //returns boolean that questions whether items instance variable should be sized smaller
     private boolean sizeSmaller () {
-        if (usageFactor() < minLoadFactor) {
+        double usage = usageFactor();
+        System.out.println("usage is  " + usage);
+        if (usage < minLoadFactor) {
             return true;
         }
         return false;
