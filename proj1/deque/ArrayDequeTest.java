@@ -1,5 +1,8 @@
 package deque;
 import org.junit.Test;
+
+import java.util.Iterator;
+
 import static org.junit.Assert.*;
 public class ArrayDequeTest {
     @Test
@@ -143,6 +146,25 @@ public class ArrayDequeTest {
         ArrayDeque<Integer> copiedDeque = new ArrayDeque<>(testDeque);
         System.out.println("test deque is " + testDeque);
         assertEquals(copiedDeque.removeLast(), testDeque.removeLast());
+    }
+    @Test
+    public void iteratorTest() {
+        int [] items = {8,7,6,5,12,11,10,9};
+        ArrayDeque<Integer> testDeque = new ArrayDeque<>();
+        testDeque.addFirst(8);
+        testDeque.addFirst(9);
+        testDeque.addFirst(10);
+        testDeque.addFirst(11);
+        testDeque.addFirst(12);
+        testDeque.addLast(7);
+        testDeque.addLast(6);
+        testDeque.addLast(5);
+
+        //grab iterator method from the testDeque
+        Iterator<Integer> loop = testDeque.iterator();
+        while(loop.hasNext()) {
+            System.out.println("current element is " + loop.next());
+        }
     }
 
 }

@@ -187,7 +187,6 @@ public class LinkedListDequeTest {
         }
         //instantiate iterator object from testList
         Iterator<String> loop = testList.iterator();
-
         while(loop.hasNext()) {
             System.out.println("Current string is " + loop.next());
         }

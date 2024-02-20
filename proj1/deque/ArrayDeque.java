@@ -9,6 +9,8 @@ Circular queue resolves problem of memory wastage, as it reuses empty space from
 /*Invariants*/
 //when we've reached end of queue, can use modulo operator to achieve circular implementaton (front = (rear + 1)% length)
 
+import java.util.Iterator;
+
 public class ArrayDeque<T> implements Deque<T> {
     /*private load factor instance variables to help keep array to appropriate size */
    // @source - https://freedium.cfd/https://medium.com/@ohermans1/breaking-free-from-fixed-array-sizes-the-power-of-dynamic-resizing-abf81df691e7
@@ -233,6 +235,33 @@ public class ArrayDeque<T> implements Deque<T> {
             return true;
         }
         return false;
+    }
+    //returns iterator
+    public Iterator<T> iterator() {
+        return new ArrayDequeIterator();
+    }
+    private class ArrayDequeIterator implements Iterator<T> {
+        private int totalEl;
+        private int idx;
+        private ArrayDequeIterator() {
+            //reassign idx to the front instance variable
+            //reassign totalEl to 0
+            totalEl = 0;
+            idx = front;
+        }
+       //moves the curr value up by one and returns the current value of the currEl
+        public T next() {
+            //grab current value at the idx variable
+            T currVal = items[idx];
+            //increment totalEl by 1;
+            totalEl++;
+            //reassign idx to the next element in the array
+            idx = (idx + 1 ) % items.length;
+            return currVal;
+        }
+        public boolean hasNext() {
+            return front == rear;
+        }
     }
 
 }
