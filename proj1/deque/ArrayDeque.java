@@ -9,7 +9,7 @@ Circular queue resolves problem of memory wastage, as it reuses empty space from
 /*Invariants*/
 //when we've reached end of queue, can use modulo operator to achieve circular implementaton (front = (rear + 1)% length)
 
-public class ArrayDeque<T> {
+public class ArrayDeque<T> implements Deque<T> {
     /*private load factor instance variables to help keep array to appropriate size */
    // @source - https://freedium.cfd/https://medium.com/@ohermans1/breaking-free-from-fixed-array-sizes-the-power-of-dynamic-resizing-abf81df691e7
     private double maxLoadFactor = 0.75;
@@ -36,6 +36,7 @@ public class ArrayDeque<T> {
         System.arraycopy(other.items, 0, this.items, 0, other.size);
     }
     /*adds item t to the front of the deque*/
+   @Override
     public void addFirst(T item) {
         //check load factor to see if we are using maximum space for array
         boolean makeBigger = sizeBigger();
@@ -68,6 +69,7 @@ public class ArrayDeque<T> {
         size++;
     }
    /*adds an item type t to the back of the deque*/
+   @Override
     public void addLast(T item) {
         //check load factor to see if we are using maximum space for array
         boolean makeBigger = sizeBigger();
@@ -98,18 +100,13 @@ public class ArrayDeque<T> {
         items[rear] = item;
         size++;
     }
-   /*returns true if the deque is empty*/
-    public boolean isEmpty() {
-        if (size == 0) {
-            return false;
-        }
-        return true;
-    }
    /* returns the number of items in the deque*/
+   @Override
     public int size () {
         return size;
     }
     /*prints the items in the deque from first to last separated by a space*/
+    @Override
     public void printDeque() {
         String[] strItems = new String[size];
         int count = 0;
@@ -124,6 +121,7 @@ public class ArrayDeque<T> {
         String.join(" ", strItems);
     }
     /*removes and returns the first item in the deque*/
+    @Override
     public T removeFirst() {
         //first check if the queue is empty, if so return null
         if (front == -1 && rear == -1) {
@@ -155,6 +153,7 @@ public class ArrayDeque<T> {
         }
     }
   /* removes and returns the items at the back of the deque*/
+  @Override
     public T removeLast() {
         //if the arr is empty, return null
         if(front == -1 && rear == -1) {
@@ -189,6 +188,7 @@ public class ArrayDeque<T> {
         }
     }
     /*gets the item at the given idx*/
+    @Override
     public T get(int idx) {
         return items[idx];
     }

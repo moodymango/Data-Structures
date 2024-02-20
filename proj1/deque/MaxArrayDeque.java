@@ -3,7 +3,7 @@ package deque;
 import java.util.Comparator;
 
 /*maxArrayDeque serves as a hyponym of arrayDeque*/
-public class MaxArrayDeque<T> extends ArrayDeque<T> {
+public class MaxArrayDeque<T> extends ArrayDeque<T> implements Deque<T> {
    /*creates a maxArrayDeque with the given comparator*/
     //this parameter will accept any object that supports this interface
     Comparator<T> comp;
