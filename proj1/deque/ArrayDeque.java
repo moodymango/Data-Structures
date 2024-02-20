@@ -10,6 +10,10 @@ Circular queue resolves problem of memory wastage, as it reuses empty space from
 //when we've reached end of queue, can use modulo operator to achieve circular implementaton (front = (rear + 1)% length)
 
 public class ArrayDeque<T> {
+    /*private load factor instance variables to help keep array to appropriate size */
+   // @source - https://freedium.cfd/https://medium.com/@ohermans1/breaking-free-from-fixed-array-sizes-the-power-of-dynamic-resizing-abf81df691e7
+    private double maxLoadFactor = 0.75;
+    private double minLoadFactor = 0.25;
     T[] items;
     int size;
    /*create front and rear instance variables to keep track of how much space we use in the circular queue*/
@@ -56,6 +60,13 @@ public class ArrayDeque<T> {
     }
    /*adds an item type t to the back of the deque*/
     public void addLast(T item) {
+        //check load factor to see if we are using maximum space for array
+        boolean makeBigger = sizeBigger();
+        //if true, resize array
+        if (makeBigger) {
+            //resize array
+
+        }
         if (front == -1 && rear == -1) {
             front++;
             rear++;
@@ -101,6 +112,7 @@ public class ArrayDeque<T> {
     }
     /*removes and returns the first item in the deque*/
     public T removeFirst() {
+        //first check usage factor of array
         //first check if the queue is empty, if so return null
         if (front == -1 && rear == -1) {
          return null;
@@ -158,8 +170,8 @@ public class ArrayDeque<T> {
         return items[idx];
     }
     /*resizes the array by making a bigger copy*/
-    private  void resize() {
-        System.out.println("Add resize function");
+    private  void resize(int capacity) {
+        
     }
     /*checks to see if the queue is full*/
     public boolean isFull () {
@@ -171,9 +183,24 @@ public class ArrayDeque<T> {
         }
         return false;
     }
+    //returns a ratio of memory that program ues at any given time according to the number of items
     private double usageFactor () {
-        //returns a ratio of memory that program ues at any given time according to the number of items
         int usage = size / items.length;
         return usage;
     }
+   //returns boolean that questions whether items instance variable should be sized smaller
+    private boolean sizeSmaller () {
+        if (usageFactor() < minLoadFactor) {
+            return true;
+        }
+        return false;
+    }
+    //returns boolean that questions whether items instance variable should be sized bigger
+    private boolean sizeBigger () {
+        if (usageFactor() > maxLoadFactor) {
+            return true;
+        }
+        return false;
+    }
+
 }

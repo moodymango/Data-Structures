@@ -21,12 +21,16 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
             return null;
         }
         //iterate through the items property
-        T maxEx;
-        for (T item: items) {
-            System.out.println("item is " + item);
-        }
-
-        return null;
+        T maxEl = items[front];
+     for (int i = (front + 1) % items.length; i <= rear; i = (i + 1) % items.length) {
+         int compareVal = this.comp.compare(items[i], maxEl);
+         //if the compare value is positive, it means the current el at idx i is greater than the maxEl
+         //reassign maxEl to the current el
+         if (compareVal > 0) {
+             maxEl = items[i];
+         }
+     }
+        return maxEl;
     }
   /* returns the max el in the deque as governed by the param c*/
     public T max(Comparator<T> c ) {
@@ -35,11 +39,15 @@ public class MaxArrayDeque<T> extends ArrayDeque<T> {
             return null;
         }
         //iterate through the items property
-        T maxEl;
-       for (T item: items) {
-           System.out.println("item is " + item);
-       }
-        return this.get(0);
+        T maxEl = items[front];
+        for (int i = (front + 1) % items.length; i <= rear; i = (i + 1) % items.length) {
+            int compareVal = c.compare(items[i], maxEl);
+            //if the compare value is positive, it means the current el at idx i is greater than the maxEl
+            //reassign maxEl to the current el
+            if (compareVal > 0) {
+                maxEl = items[i];
+            }
+        }
+        return maxEl;
     }
-
 }
