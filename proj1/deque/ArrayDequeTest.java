@@ -24,7 +24,28 @@ public class ArrayDequeTest {
        assertTrue("Should add 8 to Deque when removeFirst is called on an empty Deque,", 8 == testDeque.get(0));
     }
     @Test
-    public void addFirstFull() {
+    public void testResizeBigger() {
+        int [] items = {8,1,2,3,4,5,6,7};
+        ArrayDeque<Integer> testDeque = new ArrayDeque<>();
+        testDeque.addFirst(8);
+        testDeque.addFirst(7);
+        testDeque.addFirst(6);
+        testDeque.addFirst(5);
+        testDeque.addFirst(4);
+        testDeque.addFirst(3);
+        testDeque.addFirst(2);
+        testDeque.addFirst(1);
+
+        int oldSize = testDeque.size();
+        //add new item to the testDeque
+        testDeque.addLast(11);
+        testDeque.addFirst(20);
+        int newSize = testDeque.size();
+        System.out.println("old size and new size are "+ oldSize + " " + newSize);
+        assertTrue(newSize > oldSize);
+    }
+    @Test
+    public void testResizeSmaller() {
         int [] items = {8,1,2,3,4,5,6,7};
         ArrayDeque<Integer> testDeque = new ArrayDeque<>();
         testDeque.addFirst(8);

@@ -37,15 +37,24 @@ public class ArrayDeque<T> {
     }
     /*adds item t to the front of the deque*/
     public void addFirst(T item) {
+        //check load factor to see if we are using maximum space for array
+        boolean makeBigger = sizeBigger();
+        //if true, resize array
+        if (makeBigger) {
+            //resize array according to capacity
+            //multiplicative factor comes from following source:
+            //@source - https://ece.uwaterloo.ca/~dwharder/aads/Algorithms/Array_resizing/#:~:text=The%20easiest%20and%20most%20convenient,copy%20(amortized)%20per%20insertion.
+            //b/c the average percent of empty entries is much slower (see source)
+            double multFactor = Math.pow(2, .05);
+            double capacity = items.length * multFactor;
+            resize(capacity);
+        }
         //if rear and front are equal -1, our queue is empty
         if (front == -1 && rear == -1) {
             //then we increment front and rear
             front++;
             rear++;
             //if the array is full then we resize the array, increment rear and front and add the item at rear id
-        } else if (isFull()){
-            //call resize function
-                resize();
         } else {
             // else we can simply add the item at front
            if (front == 0) {
@@ -64,15 +73,17 @@ public class ArrayDeque<T> {
         boolean makeBigger = sizeBigger();
         //if true, resize array
         if (makeBigger) {
-            //resize array
-
+            //resize array according to capacity
+            //multiplicative factor comes from following source:
+            //@source - https://ece.uwaterloo.ca/~dwharder/aads/Algorithms/Array_resizing/#:~:text=The%20easiest%20and%20most%20convenient,copy%20(amortized)%20per%20insertion.
+            //b/c the average percent of empty entries is much slower
+            double multFactor = Math.pow(2, .05);
+            double capacity = items.length * multFactor;
+            resize(capacity);
         }
         if (front == -1 && rear == -1) {
             front++;
             rear++;
-        } else if (isFull()) {
-            //call resize function
-            resize();
         } else {
             //if rear is equal to size - 1, then we want to reassign rear to 0
             if(rear == items.length - 1 ) {
@@ -112,7 +123,12 @@ public class ArrayDeque<T> {
     }
     /*removes and returns the first item in the deque*/
     public T removeFirst() {
-        //first check usage factor of array
+        //first check if we should make the array smaller
+        boolean makeSmall = sizeSmaller();
+        //if true, then we resize array with new capacity
+        if(makeSmall) {
+            //calculate
+        }
         //first check if the queue is empty, if so return null
         if (front == -1 && rear == -1) {
          return null;
@@ -169,9 +185,16 @@ public class ArrayDeque<T> {
     public T get(int idx) {
         return items[idx];
     }
-    /*resizes the array by making a bigger copy*/
-    private  void resize(int capacity) {
-        
+    /*resizes the array by making a bigger or smaller copy*/
+    private void resize(double capacity) {
+        //create new array with the size capacity
+        //round the capacity to the closest int
+        int rounded = (int) Math.round(capacity);
+        T[] newItems = (T[]) new Object[rounded];
+        for (int i = front; i <= rear; i = (i +1) % items.length) {
+            newItems[i] = items[i];
+        }
+        items = newItems;
     }
     /*checks to see if the queue is full*/
     public boolean isFull () {
