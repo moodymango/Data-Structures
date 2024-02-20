@@ -47,7 +47,7 @@ public class ArrayDeque<T> {
             //b/c the average percent of empty entries is much slower (see source)
             double multFactor = Math.pow(2, .05);
             double capacity = items.length * multFactor;
-            resize(capacity);
+            resizeUp(capacity);
         }
         //if rear and front are equal -1, our queue is empty
         if (front == -1 && rear == -1) {
@@ -79,7 +79,7 @@ public class ArrayDeque<T> {
             //b/c the average percent of empty entries is much slower
             double multFactor = Math.pow(2, .05);
             double capacity = items.length * multFactor;
-            resize(capacity);
+            resizeUp(capacity);
         }
         if (front == -1 && rear == -1) {
             front++;
@@ -123,33 +123,32 @@ public class ArrayDeque<T> {
     }
     /*removes and returns the first item in the deque*/
     public T removeFirst() {
-        //first check if we should make the array smaller
-        boolean makeSmall = sizeSmaller();
-        //if true, then we resize array with new capacity
-        if(makeSmall) {
-            //calculate
-        }
         //first check if the queue is empty, if so return null
         if (front == -1 && rear == -1) {
          return null;
             //if there is only one element in the array (front and rear pointing to the same arr)
-        } else if (front == rear){
+        } else {
             //reassign front and rear to -1 and set the value of the array to null
             T removed = items[front];
-            items[front] = null;
-            front = rear = -1;
-            size = 0;
-            return removed;
-        } else {
-            //if front is equal to the array.size -1, reassign front to 0 and increment by 1
-            T removed = items[front];
-            items[front] = null;
-            if (front == items.length - 1) {
-                front = 0;
+            if (front == rear){
+                items[front] = null;
+                front = rear = -1;
+                size = 0;
             } else {
-                front++;
+                //if front is equal to the array.size -1, reassign front to 0 and increment by 1
+                items[front] = null;
+                if (front == items.length - 1) {
+                    front = 0;
+                } else {
+                    front++;
+                }
+                size--;
             }
-            size--;
+            if (sizeSmaller()) {
+                //calculate resize capacity
+                double capacity = items.length / 2;
+                resize(capacity);
+            }
             return removed;
         }
     }
@@ -158,26 +157,31 @@ public class ArrayDeque<T> {
         //if the arr is empty, return null
         if(front == -1 && rear == -1) {
             return null;
-        } else if(front == rear) {
-            //else if there is only one element in the array, we save the value of the array , reassign front and -1 to 0, and decrement size, return deleted item
-            T removed = items[rear];
-            items[rear] = null;
-            front = rear = -1;
-            size = 0;
-            return removed;
         } else {
-            //else we have more than 1 el in our arr
             T removed = items[rear];
-            items[rear] = null;
-            //if we have reached the limit of our array (0), we point rear at size - 1;
-            if (rear == 0) {
-                rear = items.length - 1;
-            } else {
-                rear--;
+            if(front == rear) {
+                //else if there is only one element in the array, we save the value of the array , reassign front and -1 to 0, and decrement size, return deleted item
+                items[rear] = null;
+                front = rear = -1;
+                size = 0;
+            } else{
+                //else we have more than 1 el in our arr
+                items[rear] = null;
+                //if we have reached the limit of our array (0), we point rear at size - 1;
+                if (rear == 0) {
+                    rear = items.length - 1;
+                } else {
+                    rear--;
+                }
+                //decrement size
+                size--;
+                //return deleted
             }
-            //decrement size
-            size--;
-            //return deleted
+            if (sizeSmaller()) {
+                //calculate resize capacity
+                double capacity = items.length / 2;
+                resize(capacity);
+            }
             return removed;
         }
     }
@@ -186,15 +190,33 @@ public class ArrayDeque<T> {
         return items[idx];
     }
     /*resizes the array by making a bigger or smaller copy*/
+    private void resizeUp(double capacity) {
+        //create new array with the size capacity
+        //round the capacity to the closest int
+        int rounded = (int) Math.round(capacity);
+        T[] newItems = (T[]) new Object[rounded];
+        //if rounded is smaller than the current length of items, need to reassign the front and rear bounds
+        if (rounded < items.length) {
+            for (int i = 0; i <= rear; i = (i +1) % newItems.length) {
+                newItems[i] = items[i];
+            }
+        }
+        for (int i = front; i <= rear; i = (i +1) % items.length) {
+            newItems[i] = items[i];
+        }
+        items = newItems;
+    }
     private void resize(double capacity) {
         //create new array with the size capacity
         //round the capacity to the closest int
         int rounded = (int) Math.round(capacity);
         T[] newItems = (T[]) new Object[rounded];
-        for (int i = front; i <= rear; i = (i +1) % items.length) {
-            newItems[i] = items[i];
+        for (int i = 0; i < size; i++) {
+            newItems[i] = items[(front + i) % items.length];
         }
         items = newItems;
+        front = 0;
+        rear = size;
     }
     /*checks to see if the queue is full*/
     public boolean isFull () {

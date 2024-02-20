@@ -46,17 +46,16 @@ public class ArrayDequeTest {
     }
     @Test
     public void testResizeSmaller() {
-        int [] items = {8,1,2,3,4,5,6,7};
+        int [] items = {8,0,0,0,0,0,0,7};
         ArrayDeque<Integer> testDeque = new ArrayDeque<>();
         testDeque.addFirst(8);
         testDeque.addFirst(7);
-        testDeque.addFirst(6);
-        testDeque.addFirst(5);
-        testDeque.addFirst(4);
-        testDeque.addFirst(3);
-        testDeque.addFirst(2);
-        testDeque.addFirst(1);
-
+        int oldSize = testDeque.size();
+        //remove one element
+        int removed = testDeque.removeFirst();
+        //get new size
+        int newSize = testDeque.size();
+        assertTrue(newSize < oldSize);
     }
     @Test
     public void addFirstNotFull() {
