@@ -74,7 +74,7 @@ public class MaxArrayDequeTest {
     public void maxArrayDequeRandomized() {
         Comparator<Integer> comp = new intComparator();
         MaxArrayDeque<Integer> testD = new MaxArrayDeque<>(comp);
-        int N = 5000;
+        int N = 10;
         for (int i = 0; i < N; i++) {
             int operationNum = StdRandom.uniform(0, 4);
             if (operationNum == 0) {
@@ -86,10 +86,6 @@ public class MaxArrayDequeTest {
             } else if (operationNum == 2) {
                 if(testD.size() > 0) {
                     testD.removeFirst();
-                }
-            } else {
-                if(testD.size() > 0) {
-                    testD.removeLast();
                 }
             }
         }

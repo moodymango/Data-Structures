@@ -81,12 +81,14 @@ public class ArrayDeque<T> {
             double capacity = items.length * multFactor;
             resize(capacity);
         }
+        //if the array is empty, simply increment both front and rear pointers
         if (front == -1 && rear == -1) {
             front++;
             rear++;
+            // else we have to do additional checks to see where we are in the circular arr
         } else {
             //if rear is equal to size - 1, then we want to reassign rear to 0
-            if(rear == items.length - 1 ) {
+            if(rear >= items.length - 1 ) {
                 rear = 0;
             } else {
                 rear++;
@@ -142,13 +144,13 @@ public class ArrayDeque<T> {
                 } else {
                     front++;
                 }
-                size--;
             }
             if (sizeSmaller()) {
                 //calculate resize capacity
                 double capacity = items.length / 2;
                 resize(capacity);
             }
+            size--;
             return removed;
         }
     }
@@ -173,9 +175,6 @@ public class ArrayDeque<T> {
                 } else {
                     rear--;
                 }
-                //decrement size
-                size--;
-                //return deleted
             }
             //after removing the element, make the array smaller if necessary
             if (sizeSmaller()) {
@@ -183,6 +182,9 @@ public class ArrayDeque<T> {
                 double capacity = items.length / 2;
                 resize(capacity);
             }
+            //decrement size
+            size--;
+            //return deleted
             return removed;
         }
     }
@@ -191,17 +193,6 @@ public class ArrayDeque<T> {
         return items[idx];
     }
     /*resizes the array by making a bigger or smaller copy*/
-//    private void resizeUp(double capacity) {
-//        //create new array with the size capacity
-//        //round the capacity to the closest int
-//        int rounded = (int) Math.round(capacity);
-//        T[] newItems = (T[]) new Object[rounded];
-//        for (int i = front; i <= rear; i = (i +1) % items.length) {
-//            newItems[i] = items[i];
-//        }
-//        items = newItems;
-//        front = 0;
-//    }
     private void resize(double capacity) {
         //create new array with the size capacity
         //round the capacity to the closest int
