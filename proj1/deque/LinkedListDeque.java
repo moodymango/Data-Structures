@@ -1,6 +1,9 @@
 package deque;
+
+import java.util.Iterator;
+
 /*can implement deque as a stack (Last In, First Out) or queue (First In, First Out)*/
-public class LinkedListDeque <T> {
+public class LinkedListDeque <T> implements Deque<T> {
 /* private class representing the elements in the list */
     private class Node {
         public T value;
@@ -188,6 +191,34 @@ public class LinkedListDeque <T> {
         }
         //otherwise we recursively call the function, passing in the curr.next, idx, and depth++;
         return getRecursiveHelper(curr.next, idx, ++depth);
+    }
+      //returns an iterator method
+       public Iterator<T> iterator(){
+            return new LLIterator();
+       }
+       private class LLIterator implements Iterator<T> {
+           //instantiate a curr node variable to keep track of what node we are on in our ll.
+            private Node curr;
+            public LLIterator() {
+                curr = sentinel.next;
+            }
+            public boolean hasNext() {
+                //as long as the curr node.next is NOT pointing to the sentinel, we have a valid next value;
+              return (curr != sentinel);
+            }
+            //next method returns the current val and moves forward to next item
+            public T next (){
+                //save value of the curr node
+                T currVal = curr.value;
+                //move forward in the ll by reassign curr to curr.next
+                curr = curr.next;
+                return currVal;
+            }
+       }
+
+    /*returns whether the parameter o is equal to the deque*/
+    public boolean equals(Object o) {
+        return false;
     }
 
 }
