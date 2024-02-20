@@ -46,8 +46,8 @@ public class ArrayDeque<T> {
             //@source - https://ece.uwaterloo.ca/~dwharder/aads/Algorithms/Array_resizing/#:~:text=The%20easiest%20and%20most%20convenient,copy%20(amortized)%20per%20insertion.
             //b/c the average percent of empty entries is much slower (see source)
             double multFactor = Math.pow(2, .05);
-            double capacity = items.length * multFactor;
-            resizeUp(capacity);
+            double capacity = Math.ceil(items.length * multFactor);
+            resize(capacity);
         }
         //if rear and front are equal -1, our queue is empty
         if (front == -1 && rear == -1) {
@@ -79,7 +79,7 @@ public class ArrayDeque<T> {
             //b/c the average percent of empty entries is much slower
             double multFactor = Math.pow(2, .05);
             double capacity = items.length * multFactor;
-            resizeUp(capacity);
+            resize(capacity);
         }
         if (front == -1 && rear == -1) {
             front++;
@@ -191,17 +191,17 @@ public class ArrayDeque<T> {
         return items[idx];
     }
     /*resizes the array by making a bigger or smaller copy*/
-    private void resizeUp(double capacity) {
-        //create new array with the size capacity
-        //round the capacity to the closest int
-        int rounded = (int) Math.round(capacity);
-        T[] newItems = (T[]) new Object[rounded];
-        for (int i = front; i <= rear; i = (i +1) % items.length) {
-            newItems[i] = items[i];
-        }
-        items = newItems;
-        front = 0;
-    }
+//    private void resizeUp(double capacity) {
+//        //create new array with the size capacity
+//        //round the capacity to the closest int
+//        int rounded = (int) Math.round(capacity);
+//        T[] newItems = (T[]) new Object[rounded];
+//        for (int i = front; i <= rear; i = (i +1) % items.length) {
+//            newItems[i] = items[i];
+//        }
+//        items = newItems;
+//        front = 0;
+//    }
     private void resize(double capacity) {
         //create new array with the size capacity
         //round the capacity to the closest int
@@ -226,14 +226,11 @@ public class ArrayDeque<T> {
     }
     //returns a ratio of memory that program ues at any given time according to the number of items
     private double usageFactor () {
-        System.out.println("calculating usage factor, size, length " + size + " " + items.length );
-        double usage = (double) size / items.length;
-        return usage;
+        return (double) size / items.length;
     }
    //returns boolean that questions whether items instance variable should be sized smaller
     private boolean sizeSmaller () {
         double usage = usageFactor();
-        System.out.println("usage is  " + usage);
         if (usage < minLoadFactor) {
             return true;
         }

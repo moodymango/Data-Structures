@@ -14,6 +14,7 @@ public class ArrayDequeTest {
         testDeque.addFirst(3);
         testDeque.addFirst(2);
         testDeque.addFirst(1);
+        testDeque.addFirst(0);
         assertTrue(testDeque.isFull());
     }
     @Test
