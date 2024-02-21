@@ -185,10 +185,14 @@ public class LinkedListDequeTest {
         for (int i = 0; i < test.length; i++) {
             testList.addFirst(test[i]);
         }
-        //instantiate iterator object from testList
-        Iterator<String> loop = testList.iterator();
-        while(loop.hasNext()) {
-            System.out.println("Current string is " + loop.next());
+//        //instantiate iterator object from testList
+//        Iterator<String> loop = testList.iterator();
+//        while(loop.hasNext()) {
+//            System.out.println("Current string is " + loop.next());
+//        }
+        //enhanced for in loop
+        for (String item : testList) {
+            System.out.println("Current string is "+ item);
         }
     }
 

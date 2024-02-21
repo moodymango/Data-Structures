@@ -11,12 +11,12 @@ Circular queue resolves problem of memory wastage, as it reuses empty space from
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
+public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     /*private load factor instance variables to help keep array to appropriate size */
    // @source - https://freedium.cfd/https://medium.com/@ohermans1/breaking-free-from-fixed-array-sizes-the-power-of-dynamic-resizing-abf81df691e7
     private double maxLoadFactor = 0.75;
     private double minLoadFactor = 0.25;
-    T[] items;
+    public T[] items;
     int size;
    /*create front and rear instance variables to keep track of how much space we use in the circular queue*/
    //when we delete from the front, the front pointer is incremented
@@ -28,12 +28,14 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         size = 0;
     }
    /*creates a deep copy of  other deque*/
-    public ArrayDeque(ArrayDeque other) {
+    public ArrayDeque(ArrayDeque<T> other) {
         //create an empty array with the same size of the other array and assign it to newCopy.items
         this.items = (T[]) new Object[other.size];
         this.size = other.size;
         this.front = other.front;
         this.rear = other.rear;
+        this.minLoadFactor = other.minLoadFactor;
+        this.maxLoadFactor = other.maxLoadFactor;
         //could simply use System Copy?
         System.arraycopy(other.items, 0, this.items, 0, other.size);
     }
@@ -206,16 +208,16 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         front = 0;
         rear = size - 1;
     }
-    /*checks to see if the queue is full*/
-    public boolean isFull () {
-        if((front == 0) && (rear == items.length - 1)){
-            return true;
-        }
-        if (front == rear + 1) {
-            return true;
-        }
-        return false;
-    }
+//    /*checks to see if the queue is full*/
+//    public boolean isFull () {
+//        if((front == 0) && (rear == items.length - 1)){
+//            return true;
+//        }
+//        if (front == rear + 1) {
+//            return true;
+//        }
+//        return false;
+//    }
     //returns a ratio of memory that program ues at any given time according to the number of items
     private double usageFactor () {
         return (double) size / items.length;
@@ -223,49 +225,54 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
    //returns boolean that questions whether items instance variable should be sized smaller
     private boolean sizeSmaller () {
         double usage = usageFactor();
-        if (usage < minLoadFactor) {
-            return true;
-        }
-        return false;
+        return usage < minLoadFactor;
     }
     //returns boolean that questions whether items instance variable should be sized bigger
     private boolean sizeBigger () {
-        if (usageFactor() > maxLoadFactor) {
+        return usageFactor() > maxLoadFactor;
+    }
+   @Override
+ /*  checks if arrayDeque has the same elements in the same order*/
+    public boolean equals(Object o) {
+        //if o is in the same location in memory return true
+        if (this == o) {
             return true;
         }
-        return false;
-    }
-    public boolean equals(Object o) {
-        return false;
+        if(o.getClass() != this.getClass()) {
+            return false;
+        }
+        //what is the thing we are given not an array set, ensure we typecast it as an array set before iterating and checking both objects
+       ArrayDeque<T> other = (ArrayDeque<T>) o;
+        for (int i = this.front; i <= this.rear; i = (i + 1) % items.length) {
+            if (!other.items[i].equals(this.items[i])) {
+                return false;
+            }
+        }
+        return true;
     }
     //returns iterator
     public Iterator<T> iterator() {
         return new ArrayDequeIterator();
     }
     private class ArrayDequeIterator implements Iterator<T> {
-        private int totalEl;
         private int idx;
+        private int totalEl;
         private ArrayDequeIterator() {
             //reassign idx to the front instance variable
-            //reassign totalEl to 0
-            totalEl = 0;
             idx = front;
+            totalEl = 0;
         }
        //moves the curr value up by one and returns the current value of the currEl
         public T next() {
             //grab current value at the idx variable
             T currVal = items[idx];
-            //increment totalEl by 1;
             totalEl++;
             //reassign idx to the next element in the array
             idx = (idx + 1 ) % items.length;
             return currVal;
         }
         public boolean hasNext() {
-            if (idx > rear) {
-                return false;
-            }
-            return true;
+            return totalEl < size;
         }
     }
 
