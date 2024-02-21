@@ -2,7 +2,6 @@ package gh2;
 
  import deque.ArrayDeque;
  import deque.Deque;
- import edu.princeton.cs.algs4.StdRandom;
 
 //Note: This file will not compile until you complete the Deque implementations
 public class GuitarString {
@@ -30,14 +29,17 @@ public class GuitarString {
 
     /* Pluck the guitar string by replacing the buffer with white noise. */
     public void pluck() {
-        // TODO: Dequeue everything in buffer, and replace with random numbers
-        //       between -0.5 and 0.5. You can get such a number by using:
-        //       double r = Math.random() - 0.5;
-        //       Make sure that your random numbers are different from each
-        //       other. This does not mean that you need to check that the numbers
-        //       are different from each other. It means you should repeatedly call
-        //       Math.random() - 0.5 to generate new random numbers for each array index.
-        
+        int originalSize = buffer.size();
+        while (buffer.size() >= 0 ) {
+            buffer.removeFirst();
+        }
+        //now add all the random values back to the buffer
+        int count = 0;
+        while (count <= originalSize){
+            double r = Math.random() - 0.5;
+            buffer.addLast(r);
+            count++;
+        }
     }
 
     /* Advance the simulation one time step by performing one iteration of

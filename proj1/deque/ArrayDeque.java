@@ -251,6 +251,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         return true;
     }
     //returns iterator
+   @Override
     public Iterator<T> iterator() {
         return new ArrayDequeIterator();
     }
@@ -263,6 +264,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             totalEl = 0;
         }
        //moves the curr value up by one and returns the current value of the currEl
+       @Override
         public T next() {
             //grab current value at the idx variable
             T currVal = items[idx];
@@ -271,6 +273,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             idx = (idx + 1 ) % items.length;
             return currVal;
         }
+       @Override
         public boolean hasNext() {
             return totalEl < size;
         }

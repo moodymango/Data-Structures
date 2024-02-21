@@ -187,7 +187,7 @@ public class ArrayDequeTest {
     }
     @Test
     public void iteratorTest() {
-        int [] items = {8,7,6,5,12,11,10,9};
+        int[] items = {8, 7, 6, 5, 12, 11, 10, 9};
         ArrayDeque<Integer> testDeque = new ArrayDeque<>();
         testDeque.addFirst(8);
         testDeque.addFirst(9);
@@ -206,6 +206,31 @@ public class ArrayDequeTest {
         System.out.println("last el is " + last);
 
         for (int item : testDeque) {
+            System.out.println("looping through arrayDeque");
+            System.out.println("item is " + item);
+        }
+    }
+    @Test
+    public void iteratorDoublesTest() {
+        int [] items = {8,7,6,5,12,11,10,9};
+        ArrayDeque<Double> testDeque = new ArrayDeque<>();
+        testDeque.addFirst(8.0);
+        testDeque.addFirst(9.0);
+        testDeque.addFirst(10.0);
+        testDeque.addFirst(11.0);
+        testDeque.addFirst(12.0);
+        testDeque.addLast(7.0);
+        testDeque.addLast(6.0);
+        testDeque.addLast(5.0);
+
+        //first el
+        double first = testDeque.get(testDeque.front);
+        //last el
+        double last = testDeque.get(testDeque.rear);
+        System.out.println("first el is " + first);
+        System.out.println("last el is " + last);
+
+        for (double item : testDeque) {
             System.out.println("looping through arrayDeque");
             System.out.println("item is "+ item);
         }
