@@ -165,7 +165,6 @@ public class ArrayDequeTest {
         int first = testDeque.get(testDeque.front);
         //last el
         int last = testDeque.get(testDeque.rear);
-
         System.out.println("first el is " + first);
         System.out.println("last el is " + last);
 

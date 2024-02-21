@@ -11,7 +11,7 @@ Circular queue resolves problem of memory wastage, as it reuses empty space from
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T> {
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     /*private load factor instance variables to help keep array to appropriate size */
    // @source - https://freedium.cfd/https://medium.com/@ohermans1/breaking-free-from-fixed-array-sizes-the-power-of-dynamic-resizing-abf81df691e7
     private double maxLoadFactor = 0.75;
@@ -233,6 +233,9 @@ public class ArrayDeque<T> implements Deque<T> {
         if (usageFactor() > maxLoadFactor) {
             return true;
         }
+        return false;
+    }
+    public boolean equals(Object o) {
         return false;
     }
     //returns iterator

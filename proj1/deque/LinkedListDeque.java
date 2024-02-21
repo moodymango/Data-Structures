@@ -3,7 +3,7 @@ package deque;
 import java.util.Iterator;
 
 /*can implement deque as a stack (Last In, First Out) or queue (First In, First Out)*/
-public class LinkedListDeque <T> implements Deque<T> {
+public class LinkedListDeque <T> implements Deque<T>, Iterable<T>  {
 /* private class representing the elements in the list */
     private class Node {
         public T value;
