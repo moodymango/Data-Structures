@@ -57,7 +57,6 @@ public class ArrayDeque<T> implements Deque<T> {
             //then we increment front and rear
             front++;
             rear++;
-            //if the array is full then we resize the array, increment rear and front and add the item at rear id
         } else {
             // else we can simply add the item at front
            if (front == 0) {
@@ -66,7 +65,7 @@ public class ArrayDeque<T> implements Deque<T> {
                front--;
            }
         }
-        //use rear idx to add the new item and increment size by one
+        //use front idx to add the new item and increment size by one
         items[front] = item;
         size++;
     }
@@ -82,7 +81,7 @@ public class ArrayDeque<T> implements Deque<T> {
             //@source - https://ece.uwaterloo.ca/~dwharder/aads/Algorithms/Array_resizing/#:~:text=The%20easiest%20and%20most%20convenient,copy%20(amortized)%20per%20insertion.
             //b/c the average percent of empty entries is much slower
             double multFactor = Math.pow(2, .05);
-            double capacity = items.length * multFactor;
+            double capacity = Math.ceil(items.length * multFactor);
             resize(capacity);
         }
         //if the array is empty, simply increment both front and rear pointers
@@ -92,7 +91,7 @@ public class ArrayDeque<T> implements Deque<T> {
             // else we have to do additional checks to see where we are in the circular arr
         } else {
             //if rear is equal to size - 1, then we want to reassign rear to 0
-            if(rear >= items.length - 1 ) {
+            if(rear == items.length - 1 ) {
                 rear = 0;
             } else {
                 rear++;
@@ -205,7 +204,7 @@ public class ArrayDeque<T> implements Deque<T> {
         }
         items = newItems;
         front = 0;
-        rear = size;
+        rear = size - 1;
     }
     /*checks to see if the queue is full*/
     public boolean isFull () {
@@ -260,7 +259,10 @@ public class ArrayDeque<T> implements Deque<T> {
             return currVal;
         }
         public boolean hasNext() {
-            return front == rear;
+            if (idx > rear) {
+                return false;
+            }
+            return true;
         }
     }
 

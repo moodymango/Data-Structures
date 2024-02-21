@@ -18,7 +18,8 @@ public class ArrayDequeTest {
         testDeque.addFirst(2);
         testDeque.addFirst(1);
         testDeque.addFirst(0);
-        assertTrue(testDeque.isFull());
+        //test no longer valid because array dynamically resizes.
+//        assertTrue(testDeque.isFull());
     }
     @Test
     public void addFirstEmpty() {
@@ -159,6 +160,14 @@ public class ArrayDequeTest {
         testDeque.addLast(7);
         testDeque.addLast(6);
         testDeque.addLast(5);
+
+        //first el
+        int first = testDeque.get(testDeque.front);
+        //last el
+        int last = testDeque.get(testDeque.rear);
+
+        System.out.println("first el is " + first);
+        System.out.println("last el is " + last);
 
         //grab iterator method from the testDeque
         Iterator<Integer> loop = testDeque.iterator();
