@@ -96,14 +96,9 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     /*Prints the items in the deque from first to last separated by a space*/
     public void printDeque() {
         String[] strItems = new String[size];
-        int count = 0;
-        int i = front;
     //as we print we would like to start from the front and iterate forwards
-        while (i <= rear) {
-            strItems[count] = items[count].toString();
-            count++;
-            //function to ensure circular movement through array
-            i = (i + 1) % items.length;
+        for (int i = 0; i < size; i++) {
+            strItems[i] = items[(front + i) % items.length].toString();
         }
         System.out.println(String.join(" ", strItems));
     }

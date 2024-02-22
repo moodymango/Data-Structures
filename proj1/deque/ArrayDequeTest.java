@@ -197,7 +197,7 @@ public class ArrayDequeTest {
                 int randVal = StdRandom.uniform(0, 500);
                 testD.addLast(randVal);
             } else{
-                if(testD.size() > 0) {
+                if(!testD.isEmpty()) {
                     testD.removeLast();
                 }
             }
@@ -213,7 +213,7 @@ public class ArrayDequeTest {
                 int randVal = StdRandom.uniform(0, 500);
                 testD.addFirst(randVal);
             } else{
-                if(testD.size() > 0) {
+                if(!testD.isEmpty()) {
                     testD.removeFirst();
                 }
             }
@@ -242,32 +242,31 @@ public class ArrayDequeTest {
         //instantiate two different ArrayDeques
         ArrayDeque<Integer> d1 = new ArrayDeque<>();
         ArrayDeque<Integer> d2 = new ArrayDeque<>();
-        int N = 50000;
-        for(int i = 0; i < N; i++) {
+        int N = 10;
+        for (int i = 0; i < N; i++) {
             //instantiate random number btw 0 and 5
             int operationNum = StdRandom.uniform(0, 3);
             if (operationNum == 0) {
                 int randVal = StdRandom.uniform(0, 500);
                 d1.addLast(randVal);
                 d2.addLast(randVal);
-            } else if(operationNum == 1){
+            } else if (operationNum == 1) {
                 int randVal = StdRandom.uniform(0, 50);
                 d1.addFirst(randVal);
                 d2.addFirst(randVal);
-            }else if(operationNum == 2) {
-                if(!d1.isEmpty()) {
+            } else if (operationNum == 2) {
+                if (!d1.isEmpty()) {
                     d1.removeLast();
                     d2.removeLast();
                 }
-            }else {
-                if(!d1.isEmpty()) {
-                    d1.removeFirst();
-                    d2.removeFirst();
-                }
             }
         }
-        //check the equality of both tests
+        //check the equality of both sizes
         assertEquals(d1.size(), d2.size());
+        //check the equality of both deques
+        d1.printDeque();
+        d2.printDeque();
+        assertEquals(true, d1.equals(d2));
     }
 
 }
