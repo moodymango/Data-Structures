@@ -16,7 +16,7 @@ public class GuitarPlayer {
     private Sequence sequence = null;
     private GuitarString[] strings;
     private double[] vol;
-
+    
     public GuitarPlayer(InputStream source) {
         try {
             sequence = MidiSystem.getSequence(source);
@@ -24,7 +24,7 @@ public class GuitarPlayer {
             e.printStackTrace();
         }
     }
-
+    
     public GuitarPlayer(File source) {
         try {
             sequence = MidiSystem.getSequence(source);
@@ -32,7 +32,7 @@ public class GuitarPlayer {
             e.printStackTrace();
         }
     }
-
+    
     private void initialize() {
         strings = new GuitarString[128];
         vol = new double[128];
@@ -41,7 +41,7 @@ public class GuitarPlayer {
             vol[i] = 0.0;
         }
     }
-
+    
     private void tic() {
         for (int i = 0; i < strings.length; i++) {
             if (vol[i] > 0.0) {
@@ -49,7 +49,7 @@ public class GuitarPlayer {
             }
         }
     }
-
+    
     private double sample() {
         double sum = 0.0f;
         for (int i = 0; i < strings.length; i++) {
@@ -57,17 +57,17 @@ public class GuitarPlayer {
         }
         return sum;
     }
-
+    
     public void play() {
         if (sequence == null) {
             return;
         }
-
+        
         System.out.println("starting performance...");
         initialize();
         double bpm = 120;
         double samplesPerTick = StdAudio.SAMPLE_RATE * (60.0 / (sequence.getResolution() * bpm));
-
+        
         Track[] tracks = sequence.getTracks();
         Track track = sequence.createTrack();
         int maxSize = 0;
@@ -77,13 +77,13 @@ public class GuitarPlayer {
                 track.add(tracks[i].get(j));
             }
         }
-
+        
         long tick = 0;
         for (int i = 0; i < track.size(); i++) {
             MidiEvent event = track.get(i);
             MidiMessage msg = event.getMessage();
             byte[] data = msg.getMessage();
-
+            
             if (msg instanceof MetaMessage) {
                 MetaMessage mm = (MetaMessage) msg;
                 if (mm.getType() == 0x51) {
@@ -92,7 +92,7 @@ public class GuitarPlayer {
                     int tempo = (data[0] & 0xff) << 16 | (data[1] & 0xff) << 8 | (data[2] & 0xff);
                     bpm = 60000000.0 / tempo;
                     samplesPerTick = StdAudio.SAMPLE_RATE
-                        * (60.0 / (sequence.getResolution() * bpm));
+                            * (60.0 / (sequence.getResolution() * bpm));
                 } else if (mm.getType() == 0x05) {
                     // lyrics
                     data = mm.getData();
@@ -102,7 +102,7 @@ public class GuitarPlayer {
                 }
                 continue;
             }
-
+            
             if (event.getTick() > tick) {
                 int samplesToSkip = (int) ((event.getTick() - tick) * samplesPerTick);
                 for (int j = 0; j < samplesToSkip; j++) {
@@ -111,11 +111,11 @@ public class GuitarPlayer {
                 }
                 tick = event.getTick();
             }
-
+            
             int j = 0;
             while (j < data.length - 2) {
                 int s = data[j++] & 0xFF;
-
+                
                 if (s >= 0x80 && s <= 0x8F) {
                     // note off
                     int note = data[j++] & 0xFF;
@@ -134,7 +134,7 @@ public class GuitarPlayer {
                 }
             }
         }
-
+        
         System.out.println("please clap");
     }
 }

@@ -14,30 +14,32 @@ public class MaxArrayDequeTest {
         //returns < 0 if str1 has less char
         // > 0
         @Override
-        public int compare (String str1, String str2) {
+        public int compare(String str1, String str2) {
             return str1.compareTo(str2);
         }
     }
+    
     /*compares which str contains the most chars*/
     public class strLengthComparator implements Comparator<String> {
         @Override
         public int compare(String str1, String str2) {
             int len1 = str1.length();
             int len2 = str2.length();
-           return len1 - len2;
+            return len1 - len2;
         }
     }
-   /* compares which int is the biggest*/
+    
+    /* compares which int is the biggest*/
     public class intComparator implements Comparator<Integer> {
         @Override
-       public int compare(Integer num1, Integer num2) {
+        public int compare(Integer num1, Integer num2) {
             return num1 - num2;
         }
-   }
-
+    }
+    
     @Test
-    public void testComparator () {
-        String [] testArr = {"Howdy", "Hiya", "Hello", "Greetings", "Sup", "Good Morning"};
+    public void testComparator() {
+        String[] testArr = {"Howdy", "Hiya", "Hello", "Greetings", "Sup", "Good Morning"};
         //instantiate instance of strComparator
         Comparator<String> comp = new strComparator();
         //create new MaxDeque
@@ -48,12 +50,13 @@ public class MaxArrayDequeTest {
         System.out.println(testDeque.get(testDeque.size() - 1));
         String first = testDeque.get(0);
         String last = testDeque.get(testDeque.size() - 1);
-
+        
         System.out.println(comp.compare(first, last)); // "h" is 1 times greater than G, aka comes later in the alphabet
     }
+    
     @Test
-    public void maxArrayDequeMax () {
-        String [] testArr = {"Howdy", "Hiya", "Hello", "Greetings", "Sup", "Good Morning"};
+    public void maxArrayDequeMax() {
+        String[] testArr = {"Howdy", "Hiya", "Hello", "Greetings", "Sup", "Good Morning"};
         //instantiate instance of strLengthComparator
         Comparator<String> comp = new strLengthComparator();
         //create new MaxDeque
@@ -64,6 +67,7 @@ public class MaxArrayDequeTest {
         String maxStr = testDeque.max();
         assertEquals(maxStr, testDeque.removeLast());
     }
+    
     @Test
     public void maxArrayDequeRandomized() {
         Comparator<Integer> comp = new intComparator();
@@ -78,13 +82,14 @@ public class MaxArrayDequeTest {
                 int randVal = StdRandom.uniform(0, 500);
                 testD.addFirst(randVal);
             } else if (operationNum == 2) {
-                if(testD.size() > 0) {
+                if (testD.size() > 0) {
                     testD.removeFirst();
                 }
             }
         }
         int maxVal = testD.max(comp);
     }
+    
     @Test
     public void maxArrayDequeRandomGet() {
         Comparator<Integer> comp = new intComparator();
@@ -99,12 +104,12 @@ public class MaxArrayDequeTest {
                 int randVal = StdRandom.uniform(0, 500);
                 testD.addFirst(randVal);
             } else if (operationNum == 2) {
-                if(testD.size() > 0) {
+                if (testD.size() > 0) {
                     testD.removeFirst();
                 }
             }
         }
         int max = testD.max();
     }
-
+    
 }
