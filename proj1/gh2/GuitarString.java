@@ -30,7 +30,7 @@ public class GuitarString {
     /* Pluck the guitar string by replacing the buffer with white noise. */
     public void pluck() {
         int originalSize = buffer.size();
-        while (buffer.size() >= 0 ) {
+        while (buffer.size() > 0 ) {
             buffer.removeFirst();
         }
         //now add all the random values back to the buffer
@@ -48,11 +48,7 @@ public class GuitarString {
     public void tic() {
         //remove the first element in the deque
         double removedSample = buffer.removeFirst();
-
-        //grab second el in the deque
-        double secondSample = buffer.removeFirst();
-        //add it back into the array
-        buffer.addFirst(secondSample);
+        double secondSample = buffer.get(0);
         //find avg of second sample and removedSample
         double avgSample = (removedSample + secondSample) * 0.5;
         //multiple avg sample by decay
@@ -63,12 +59,7 @@ public class GuitarString {
 
     /* Return the double at the front of the buffer. */
     public double sample() {
-        //grab el in the deque
-        double firstSample = buffer.removeFirst();
-        //add it back into the array
-        buffer.addFirst(firstSample);
-        return firstSample;
-
+        return buffer.get(0);
     }
 }
 

@@ -84,7 +84,6 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             }
         }
         //add item at the rear idx and increment size by 1;
-       System.out.println("items.length is " + items.length);
         items[rear] = item;
         size++;
     }
@@ -195,6 +194,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         items = newItems;
         front = 0;
         rear = size - 1;
+
     }
     //returns a ratio of memory that program ues at any given time
     private double usageFactor () {
