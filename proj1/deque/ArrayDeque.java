@@ -5,8 +5,6 @@ import java.util.Iterator;
 /*Circular queue implementation - @source - Jenny's' Lectures CS IT
 - https://www.youtube.com/watch?v=dn01XST9-bI*/
 public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
-    private double maxLoadFactor = 0.75;
-    private double minLoadFactor = 0.25;
     private T[] items;
     private int size;
    //when we delete from the front, the front pointer is incremented
@@ -105,7 +103,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             //function to ensure circular movement through array
             i = (i + 1) % items.length;
         }
-        String.join(" ", strItems);
+        System.out.println(String.join(" ", strItems));
     }
     /*removes and returns the first item in the deque*/
     @Override
@@ -202,11 +200,12 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     }
    //returns boolean stating should be sized smaller
     private boolean sizeSmaller () {
-        double usage = usageFactor();
-        return usage < minLoadFactor;
+        double minLoadFactor = 0.25;
+        return usageFactor() < minLoadFactor;
     }
     //returns boolean stating deque should be sized bigger
     private boolean sizeBigger () {
+        double maxLoadFactor = 0.75;
         return usageFactor() > maxLoadFactor;
     }
    @Override

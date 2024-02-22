@@ -6,7 +6,7 @@ import java.util.Iterator;
 public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
 /* private class representing the elements in the list */
     private class Node {
-        private T value;
+        private final T value;
      /* ensure that node has both next and prev variables to create doubly linked list*/
         private Node prev;
         private Node next;
@@ -19,7 +19,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     private int size;
     /*using sentinel nodes eliminates many edge cases that arise in implementing ll operations*/
     //want sentinel to be specific Node's containing T value, not just any raw list Element
-    private Node sentinel;
+    private final Node sentinel;
     public LinkedListDeque() {
         //instantiate new node with next and prev values pointing to itself
         sentinel = new Node(null);
@@ -218,7 +218,13 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     /*Returns whether the parameter o is equal to the deque*/
    @Override
     public boolean equals(Object o) {
-        return this == o;
-    }
+       if (o == null) {
+           return false;
+       }
+       if (this == o) {
+           return true;
+       }
+       return false;
+   }
 
 }
