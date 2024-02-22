@@ -20,9 +20,9 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     private int size;
    /*create front and rear instance variables to keep track of how much space we use in the circular queue*/
    //when we delete from the front, the front pointer is incremented
-    public int front = -1;
+    private int front = -1;
     //we insert items via the rear idx, so when rear == arr.length, our queue is full
-    public int rear = -1;
+    private int rear = -1;
     public ArrayDeque() {
         items = (T[]) new Object[8];
         size = 0;
@@ -48,7 +48,8 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         if (makeBigger) {
             //resize array according to capacity
             //multiplicative factor comes from following source:
-            //@source - https://ece.uwaterloo.ca/~dwharder/aads/Algorithms/Array_resizing/#:~:text=The%20easiest%20and%20most%20convenient,copy%20(amortized)%20per%20insertion.
+            //@source
+            //https://ece.uwaterloo.ca/~dwharder/aads/Algorithms/Array_resizing/#:~:text=The%20easiest%20and%20most%20convenient,copy%20(amortized)%20per%20insertion.
             //b/c the average percent of empty entries is much slower (see source)
             double multFactor = Math.pow(2, .05);
             double capacity = Math.ceil(items.length * multFactor);
@@ -128,8 +129,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     public T removeFirst() {
         //first check if the queue is empty, if so return null
         if (front == -1 && rear == -1) {
-         return null;
-            //if there is only one element in the array (front and rear pointing to the same arr)
+            return null;
         } else {
             //reassign front and rear to -1 and set the value of the array to null
             T removed = items[front];
@@ -138,20 +138,20 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
                 front = rear = -1;
                 size = 0;
             } else {
-                //if front is equal to the array.size -1, reassign front to 0 and increment by 1
+                //if front is equal to the array.size -1
                 items[front] = null;
                 if (front == items.length - 1) {
                     front = 0;
                 } else {
                     front++;
                 }
+                size--;
             }
             if (sizeSmaller()) {
                 //calculate resize capacity
                 double capacity = items.length / 2;
                 resize(capacity);
             }
-            size--;
             return removed;
         }
     }
@@ -177,6 +177,8 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
                 } else {
                     rear--;
                 }
+                //decrement size
+                size--;
             }
             //after removing the element, make the array smaller if necessary
             if (sizeSmaller()) {
@@ -184,8 +186,6 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
                 double capacity = items.length / 2;
                 resize(capacity);
             }
-            //decrement size
-            size--;
             //return deleted
             return removed;
         }
@@ -193,7 +193,8 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     /*gets the item at the given idx*/
     @Override
     public T get(int idx) {
-        return items[idx];
+        int correctIdx = (front + idx) % items.length;
+        return items[correctIdx];
     }
     /*resizes the array by making a bigger or smaller copy*/
     private void resize(double capacity) {
@@ -208,16 +209,16 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         front = 0;
         rear = size - 1;
     }
-    //returns a ratio of memory that program ues at any given time according to the number of items
+    //returns a ratio of memory that program ues at any given time
     private double usageFactor () {
         return (double) size / items.length;
     }
-   //returns boolean that questions whether items instance variable should be sized smaller
+   //returns boolean stating should be sized smaller
     private boolean sizeSmaller () {
         double usage = usageFactor();
         return usage < minLoadFactor;
     }
-    //returns boolean that questions whether items instance variable should be sized bigger
+    //returns boolean stating deque should be sized bigger
     private boolean sizeBigger () {
         return usageFactor() > maxLoadFactor;
     }

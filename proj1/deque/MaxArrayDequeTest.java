@@ -87,4 +87,25 @@ public class MaxArrayDequeTest {
         System.out.println();
         System.out.println("max val in the testD is " + maxVal);
     }
+    @Test
+    public void maxArrayDequeRandomGet() {
+        Comparator<Integer> comp = new intComparator();
+        MaxArrayDeque<Integer> testD = new MaxArrayDeque<>(comp);
+        int N = 8;
+        for (int i = 0; i < N; i++) {
+            int operationNum = StdRandom.uniform(0, 4);
+            if (operationNum == 0) {
+                int randVal = StdRandom.uniform(0, 500);
+                testD.addLast(randVal);
+            } else if (operationNum == 1) {
+                int randVal = StdRandom.uniform(0, 500);
+                testD.addFirst(randVal);
+            } else if (operationNum == 2) {
+                if(testD.size() > 0) {
+                    testD.removeFirst();
+                }
+            }
+        }
+    }
+
 }

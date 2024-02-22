@@ -145,9 +145,9 @@ public class ArrayDequeTest {
         testDeque.addLast(5);
 
         //first el
-        int first = testDeque.get(testDeque.front);
+        int first = testDeque.get(0);
         //last el
-        int last = testDeque.get(testDeque.rear);
+        int last = testDeque.get(testDeque.size()) - 1;
         System.out.println("first el is " + first);
         System.out.println("last el is " + last);
 
@@ -170,9 +170,9 @@ public class ArrayDequeTest {
         testDeque.addLast(5.0);
 
         //first el
-        double first = testDeque.get(testDeque.front);
+        double first = testDeque.get(0);
         //last el
-        double last = testDeque.get(testDeque.rear);
+        double last = testDeque.get(testDeque.size() - 1);
         System.out.println("first el is " + first);
         System.out.println("last el is " + last);
 
@@ -198,6 +198,19 @@ public class ArrayDequeTest {
         double secondEl= testDeque.removeFirst();
 
         assertTrue(secondEl == 9.0);
+    }
+    @Test
+    public void negativeSize() {
+        ArrayDeque<Double> testDeque = new ArrayDeque<>();
+        testDeque.addLast(8.0);
+        testDeque.addLast(9.0);
+        testDeque.addLast(10.0);
+        testDeque.addFirst(1.0);
+
+        while (testDeque.size() > 0) {
+            testDeque.removeLast();
+        }
+        assertTrue(testDeque.size() == 0);
     }
 
 }
