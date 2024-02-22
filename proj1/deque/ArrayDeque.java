@@ -218,7 +218,6 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         if(o.getClass() != this.getClass()) {
             return false;
         }
-        //what is the thing we are given not an array set, ensure we typecast it as an array set before iterating and checking both objects
        ArrayDeque<T> other = (ArrayDeque<T>) o;
         for (int i = this.front; i <= this.rear; i = (i + 1) % items.length) {
             if (!other.items[i].equals(this.items[i])) {

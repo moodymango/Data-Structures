@@ -11,8 +11,8 @@ public class ArrayDequeTest {
     public void addFirstEmpty() {
         int [] items = {8,0,0,0,0,0,0,0};
         ArrayDeque<Integer> testDeque = new ArrayDeque<>();
-       testDeque.addFirst(8);
-       assertTrue("Should add 8 to Deque when removeFirst is called on an empty Deque,", 8 == testDeque.get(0));
+        testDeque.addFirst(8);
+        assertTrue("Should add 8 to Deque when removeFirst is called on an empty Deque,", 8 == testDeque.get(0));
     }
     @Test
     public void testResizeBigger() {
@@ -64,10 +64,6 @@ public class ArrayDequeTest {
         ArrayDeque<Integer> testDeque = new ArrayDeque<>();
         testDeque.addLast(8);
         assertTrue("Should add 8 to Deque when removeFirst is called on an empty Deque,", 8 == testDeque.get(0));
-    }
-    @Test
-    public void addLastFull() {
-
     }
     @Test
     public void addLastNotFull() {
