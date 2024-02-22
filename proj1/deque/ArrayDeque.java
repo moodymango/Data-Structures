@@ -1,24 +1,14 @@
 package deque;
-/*Implementing a circular queue (array) to implement the deque;*/
-/*
-Circular queue resolves problem of memory wastage, as it reuses empty space from dequeue operations as a linear queue reaches the end
-*/
+import java.util.Iterator;
+/*Invariants*/
+//circular implementaton viz (front = (rear + 1)% length)
 /*Circular queue implementation - @source - Jenny's' Lectures CS IT
 - https://www.youtube.com/watch?v=dn01XST9-bI*/
-
-/*Invariants*/
-//when we've reached end of queue, can use modulo operator to achieve circular implementaton (front = (rear + 1)% length)
-
-import java.util.Iterator;
-
 public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
-    /*private load factor instance variables to help keep array to appropriate size */
-   // @source - https://freedium.cfd/https://medium.com/@ohermans1/breaking-free-from-fixed-array-sizes-the-power-of-dynamic-resizing-abf81df691e7
     private double maxLoadFactor = 0.75;
     private double minLoadFactor = 0.25;
     private T[] items;
     private int size;
-   /*create front and rear instance variables to keep track of how much space we use in the circular queue*/
    //when we delete from the front, the front pointer is incremented
     private int front = -1;
     //we insert items via the rear idx, so when rear == arr.length, our queue is full
@@ -47,10 +37,6 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         //if true, resize array
         if (makeBigger) {
             //resize array according to capacity
-            //multiplicative factor comes from following source:
-            //@source
-            //https://ece.uwaterloo.ca/~dwharder/aads/Algorithms/Array_resizing/#:~:text=The%20easiest%20and%20most%20convenient,copy%20(amortized)%20per%20insertion.
-            //b/c the average percent of empty entries is much slower (see source)
             double multFactor = Math.pow(2, .05);
             double capacity = Math.ceil(items.length * multFactor);
             resize(capacity);
@@ -80,9 +66,6 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         //if true, resize array
         if (makeBigger) {
             //resize array according to capacity
-            //multiplicative factor comes from following source:
-            //@source - https://ece.uwaterloo.ca/~dwharder/aads/Algorithms/Array_resizing/#:~:text=The%20easiest%20and%20most%20convenient,copy%20(amortized)%20per%20insertion.
-            //b/c the average percent of empty entries is much slower
             double multFactor = Math.pow(2, .05);
             double capacity = Math.ceil(items.length * multFactor);
             resize(capacity);
@@ -101,6 +84,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             }
         }
         //add item at the rear idx and increment size by 1;
+       System.out.println("items.length is " + items.length);
         items[rear] = item;
         size++;
     }
@@ -135,7 +119,8 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             T removed = items[front];
             if (front == rear){
                 items[front] = null;
-                front = rear = -1;
+                front = -1 ;
+                rear = -1;
                 size = 0;
             } else {
                 //if front is equal to the array.size -1
@@ -166,7 +151,8 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             if(front == rear) {
                 //else if there is only one element in the array, we save the value of the array , reassign front and -1 to 0, and decrement size, return deleted item
                 items[rear] = null;
-                front = rear = -1;
+                front = -1;
+                rear = -1;
                 size = 0;
             } else{
                 //else we have more than 1 el in our arr
@@ -199,8 +185,9 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     /*resizes the array by making a bigger or smaller copy*/
     private void resize(double capacity) {
         //create new array with the size capacity
-        //round the capacity to the closest int
-        int rounded = (int) Math.round(capacity);
+        //round the capacity to the closest upper int
+        int rounded = (int) Math.ceil(capacity);
+        rounded = Math.max(1, rounded);
         T[] newItems = (T[]) new Object[rounded];
         for (int i = 0; i < size; i++) {
             newItems[i] = items[(front + i) % items.length];

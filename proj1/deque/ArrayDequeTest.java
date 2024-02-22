@@ -1,26 +1,12 @@
 package deque;
+import edu.princeton.cs.algs4.StdRandom;
 import org.junit.Test;
 
+import java.util.Comparator;
 import java.util.Iterator;
 
 import static org.junit.Assert.*;
 public class ArrayDequeTest {
-    @Test
-    public void isFulladdFirstOnly() {
-        int [] items = {8,1,2,3,4,5,6,7};
-        ArrayDeque<Integer> testDeque = new ArrayDeque<>();
-        testDeque.addFirst(8);
-        testDeque.addFirst(7);
-        testDeque.addFirst(6);
-        testDeque.addFirst(5);
-        testDeque.addFirst(4);
-        testDeque.addFirst(3);
-        testDeque.addFirst(2);
-        testDeque.addFirst(1);
-        testDeque.addFirst(0);
-        //test no longer valid because array dynamically resizes.
-//        assertTrue(testDeque.isFull());
-    }
     @Test
     public void addFirstEmpty() {
         int [] items = {8,0,0,0,0,0,0,0};
@@ -168,16 +154,11 @@ public class ArrayDequeTest {
         testDeque.addLast(7.0);
         testDeque.addLast(6.0);
         testDeque.addLast(5.0);
-
         //first el
         double first = testDeque.get(0);
         //last el
         double last = testDeque.get(testDeque.size() - 1);
-        System.out.println("first el is " + first);
-        System.out.println("last el is " + last);
-
         for (double item : testDeque) {
-            System.out.println("looping through arrayDeque");
             System.out.println("item is "+ item);
         }
     }
@@ -211,6 +192,40 @@ public class ArrayDequeTest {
             testDeque.removeLast();
         }
         assertTrue(testDeque.size() == 0);
+    }
+    @Test
+    public void addRemoveLastIsEmptyRandom() {
+        ArrayDeque<Integer> testD = new ArrayDeque<>();
+        int N = 5000;
+        for (int i = 0; i < N; i++) {
+            int operationNum = StdRandom.uniform(0, 3);
+            if (operationNum == 0) {
+                int randVal = StdRandom.uniform(0, 500);
+                testD.addLast(randVal);
+            } else{
+                if(testD.size() > 0) {
+                    testD.removeLast();
+                }
+            }
+        }
+    }
+    @Test
+    public void getMethodWords() {
+        double[] items = {8.0, 9.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+        ArrayDeque<Double> testDeque = new ArrayDeque<>();
+        testDeque.addFirst(8.0);
+        testDeque.addLast(9.0);
+        testDeque.addLast(10.0);
+        testDeque.addFirst(1.0);
+        double d1 = testDeque.get(0);
+        double d2 = testDeque.get(1);
+        double d3 = testDeque.get(2);
+        double d4 = testDeque.get(3);
+
+        assertTrue(d1 == 1.0);
+        assertTrue(d2 == 8.0);
+        assertTrue(d3 == 9.0);
+        assertTrue(d4 == 10.0);
     }
 
 }
