@@ -16,13 +16,13 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
    // @source - https://freedium.cfd/https://medium.com/@ohermans1/breaking-free-from-fixed-array-sizes-the-power-of-dynamic-resizing-abf81df691e7
     private double maxLoadFactor = 0.75;
     private double minLoadFactor = 0.25;
-    public T[] items;
+    T[] items;
     int size;
    /*create front and rear instance variables to keep track of how much space we use in the circular queue*/
    //when we delete from the front, the front pointer is incremented
-    int front = -1;
+    public int front = -1;
     //we insert items via the rear idx, so when rear == arr.length, our queue is full
-    int rear = -1;
+    public int rear = -1;
     public ArrayDeque() {
         items = (T[]) new Object[8];
         size = 0;
@@ -208,16 +208,6 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         front = 0;
         rear = size - 1;
     }
-//    /*checks to see if the queue is full*/
-//    public boolean isFull () {
-//        if((front == 0) && (rear == items.length - 1)){
-//            return true;
-//        }
-//        if (front == rear + 1) {
-//            return true;
-//        }
-//        return false;
-//    }
     //returns a ratio of memory that program ues at any given time according to the number of items
     private double usageFactor () {
         return (double) size / items.length;

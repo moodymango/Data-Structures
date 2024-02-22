@@ -35,7 +35,7 @@ public class GuitarString {
         }
         //now add all the random values back to the buffer
         int count = 0;
-        while (count <= originalSize){
+        while (count < originalSize){
             double r = Math.random() - 0.5;
             buffer.addLast(r);
             count++;
@@ -46,15 +46,29 @@ public class GuitarString {
      * the Karplus-Strong algorithm.
      */
     public void tic() {
-        // TODO: Dequeue the front sample and enqueue a new sample that is
-        //       the average of the two multiplied by the DECAY factor.
-        //       **Do not call StdAudio.play().**
+        //remove the first element in the deque
+        double removedSample = buffer.removeFirst();
+
+        //grab second el in the deque
+        double secondSample = buffer.removeFirst();
+        //add it back into the array
+        buffer.addFirst(secondSample);
+        //find avg of second sample and removedSample
+        double avgSample = (removedSample + secondSample) * 0.5;
+        //multiple avg sample by decay
+        double newSample = avgSample * DECAY;
+        //add the sample to the back of the deque
+        buffer.addLast(newSample);
     }
 
     /* Return the double at the front of the buffer. */
     public double sample() {
-        // TODO: Return the correct thing.
-        return 0;
+        //grab el in the deque
+        double firstSample = buffer.removeFirst();
+        //add it back into the array
+        buffer.addFirst(firstSample);
+        return firstSample;
+
     }
 }
-    // TODO: Remove all comments that say TODO when you're done.
+

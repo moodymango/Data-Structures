@@ -235,5 +235,23 @@ public class ArrayDequeTest {
             System.out.println("item is "+ item);
         }
     }
+    @Test
+    public void removeFirstTwice () {
+        int [] items = {8,7,6,5,12,11,10,9};
+        ArrayDeque<Double> testDeque = new ArrayDeque<>();
+        testDeque.addLast(8.0);
+        testDeque.addLast(9.0);
+        testDeque.addLast(10.0);
+        testDeque.addLast(11.0);
+        testDeque.addLast(12.0);
+        testDeque.addLast(7.0);
+        testDeque.addLast(6.0);
+        testDeque.addLast(5.0);
+
+        double firstEl = testDeque.removeFirst();
+        double secondEl= testDeque.removeFirst();
+
+        assertTrue(secondEl == 9.0);
+    }
 
 }
