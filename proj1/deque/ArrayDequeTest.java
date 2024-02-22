@@ -70,7 +70,7 @@ public class ArrayDequeTest {
         testDeque.addFirst(7);
         testDeque.addFirst(6);
         testDeque.addFirst(5);
-        assertTrue("Should add 8 to Deque when removeFirst is called on an empty Deque,", 5 == testDeque.get(5));
+        assertTrue("Should add first correctly,", 5 == testDeque.get(0));
     }
     @Test
     public void addLastEmpty() {
@@ -147,7 +147,7 @@ public class ArrayDequeTest {
         //first el
         int first = testDeque.get(0);
         //last el
-        int last = testDeque.get(testDeque.size()) - 1;
+        int last = testDeque.get(testDeque.size() - 1) ;
         System.out.println("first el is " + first);
         System.out.println("last el is " + last);
 
