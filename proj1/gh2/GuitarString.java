@@ -25,8 +25,6 @@ public class GuitarString {
             buffer.addLast(0.0);
         }
     }
-
-
     /* Pluck the guitar string by replacing the buffer with white noise. */
     public void pluck() {
         int originalSize = buffer.size();
@@ -41,7 +39,6 @@ public class GuitarString {
             count++;
         }
     }
-
     /* Advance the simulation one time step by performing one iteration of
      * the Karplus-Strong algorithm.
      */
@@ -56,7 +53,6 @@ public class GuitarString {
         //add the sample to the back of the deque
         buffer.addLast(newSample);
     }
-
     /* Return the double at the front of the buffer. */
     public double sample() {
         return buffer.get(0);

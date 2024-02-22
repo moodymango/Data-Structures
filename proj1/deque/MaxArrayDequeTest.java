@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.Comparator;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class MaxArrayDequeTest {
     /* compares which string comes earlier in the alphabet */
@@ -61,7 +62,6 @@ public class MaxArrayDequeTest {
             testDeque.addLast(word);
         }
         String maxStr = testDeque.max();
-        System.out.println("Max str is "+ maxStr);
         assertEquals(maxStr, testDeque.removeLast());
     }
     @Test
@@ -84,14 +84,12 @@ public class MaxArrayDequeTest {
             }
         }
         int maxVal = testD.max(comp);
-        System.out.println();
-        System.out.println("max val in the testD is " + maxVal);
     }
     @Test
     public void maxArrayDequeRandomGet() {
         Comparator<Integer> comp = new intComparator();
         MaxArrayDeque<Integer> testD = new MaxArrayDeque<>(comp);
-        int N = 8;
+        int N = 6000;
         for (int i = 0; i < N; i++) {
             int operationNum = StdRandom.uniform(0, 4);
             if (operationNum == 0) {
@@ -106,6 +104,7 @@ public class MaxArrayDequeTest {
                 }
             }
         }
+        int max = testD.max();
     }
 
 }
