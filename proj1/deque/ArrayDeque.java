@@ -61,7 +61,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             rear++;
         } else {
             // else we can simply add the item at front
-           if (front == 0) {
+           if (front <= 0) {
                front = items.length - 1;
            } else {
                front--;
