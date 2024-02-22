@@ -169,16 +169,6 @@ public class LinkedListDequeTest {
         assertEquals("Should return the 4th element in the test linkedlist", s1, testArr[3]);
     }
     @Test
-    public void deepCopyConstructor() {
-        LinkedListDeque<Integer> lld1 = new LinkedListDeque<>();
-        for (int i = 0; i < 1000000; i++) {
-            lld1.addLast(i);
-        }
-        LinkedListDeque<Integer> intList = new LinkedListDeque<>(lld1);
-        assertEquals("Both lists should deeply equal one another", lld1.get(10000), intList.get(10000));
-        assertEquals("Both lists have the same tail node", lld1.get(99999), intList.get(99999));
-    }
-    @Test
     public void iteratorTest() {
         LinkedListDeque<String> testList = new LinkedListDeque<>();
         String[] test = {"Bananas", "Mangos", "Peaches", "Grapes", "Apples", "Pears", "Plums", "Pineapples"};

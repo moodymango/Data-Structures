@@ -9,10 +9,10 @@ public interface Deque<T> {
   T removeLast();
   T get(int idx);
     /*returns true if the deque is empty*/
-    default public boolean isEmpty() {
+  default boolean isEmpty() {
         if (size() == 0) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 }

@@ -6,10 +6,10 @@ import java.util.Iterator;
 public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
 /* private class representing the elements in the list */
     private class Node {
-        public T value;
+        private T value;
      /* ensure that node has both next and prev variables to create doubly linked list*/
-        public Node prev;
-        public Node next;
+        private Node prev;
+        private Node next;
         //every node is instantiated only with a value, we reassign the next and prev based on it's position in the list
         private Node (T d) {
             value  = d;
