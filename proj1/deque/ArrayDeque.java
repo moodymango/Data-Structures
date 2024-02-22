@@ -1,7 +1,9 @@
 package deque;
 import java.util.Iterator;
+import java.util.Objects;
+
 /*Invariants*/
-//circular implementaton viz (front = (rear + 1)% length)
+//circular implementaton: (front = (rear + 1)% length)
 /*Circular queue implementation - @source - Jenny's' Lectures CS IT
 - https://www.youtube.com/watch?v=dn01XST9-bI*/
 public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
@@ -27,8 +29,8 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
 //        //could simply use System Copy?
 //        System.arraycopy(other.items, 0, this.items, 0, other.size);
 //    }
-    /*adds item t to the front of the deque*/
    @Override
+   /*Adds item t to the front of the deque*/
     public void addFirst(T item) {
         //check load factor to see if we are using maximum space for array
         boolean makeBigger = sizeBigger();
@@ -56,8 +58,8 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         items[front] = item;
         size++;
     }
-   /*adds an item type t to the back of the deque*/
    @Override
+   /*Adds an item type t to the back of the deque*/
     public void addLast(T item) {
         //check load factor to see if we are using maximum space for array
         boolean makeBigger = sizeBigger();
@@ -85,13 +87,13 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         items[rear] = item;
         size++;
     }
-   /* returns the number of items in the deque*/
    @Override
-    public int size () {
+   /*Returns the number of items in the deque*/
+    public int size() {
         return size;
     }
-    /*prints the items in the deque from first to last separated by a space*/
     @Override
+    /*Prints the items in the deque from first to last separated by a space*/
     public void printDeque() {
         String[] strItems = new String[size];
         int count = 0;
@@ -105,8 +107,8 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         }
         System.out.println(String.join(" ", strItems));
     }
-    /*removes and returns the first item in the deque*/
     @Override
+    /*Removes and returns the first item in the deque*/
     public T removeFirst() {
         //first check if the queue is empty, if so return null
         if (size == 0) {
@@ -137,8 +139,8 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             return removed;
         }
     }
-  /* removes and returns the items at the back of the deque*/
   @Override
+  /*Removes and returns the items at the back of the deque*/
     public T removeLast() {
         //if the arr is empty, return null
         if(size == 0) {
@@ -173,13 +175,13 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             return removed;
         }
     }
-    /*gets the item at the given idx*/
     @Override
+    /*Gets the item at the given idx*/
     public T get(int idx) {
         int correctIdx = (front + idx) % items.length;
         return items[correctIdx];
     }
-    /*resizes the array by making a bigger or smaller copy*/
+    /*Resizes the array by making a bigger or smaller copy*/
     private void resize(double capacity) {
         //create new array with the size capacity
         //round the capacity to the closest upper int
@@ -192,42 +194,55 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         items = newItems;
         front = 0;
         rear = size - 1;
-
     }
-    //returns a ratio of memory that program ues at any given time
-    private double usageFactor () {
+    /*Returns a ratio of memory that program ues at any given time*/
+    private double usageFactor() {
         return (double) size / items.length;
     }
-   //returns boolean stating should be sized smaller
-    private boolean sizeSmaller () {
+  /* Returns boolean stating should be sized smaller*/
+    private boolean sizeSmaller() {
         double minLoadFactor = 0.25;
         return usageFactor() < minLoadFactor;
     }
-    //returns boolean stating deque should be sized bigger
-    private boolean sizeBigger () {
+/*  Returns boolean stating deque should be sized bigger*/
+    private boolean sizeBigger() {
         double maxLoadFactor = 0.75;
         return usageFactor() > maxLoadFactor;
     }
    @Override
- /*  checks if arrayDeque has the same elements in the same order*/
+ /* Checks if arrayDeque and o have the same elements in the same order.*/
     public boolean equals(Object o) {
         //if o is in the same location in memory return true
         if (this == o) {
             return true;
         }
-        if(o.getClass() != this.getClass()) {
+        //if o is not an instance of Deque
+        if(!(o instanceof Deque)) {
             return false;
         }
-       ArrayDeque<T> other = (ArrayDeque<T>) o;
-        for (int i = this.front; i <= this.rear; i = (i + 1) % items.length) {
-            if (!other.items[i].equals(this.items[i])) {
-                return false;
-            }
-        }
+        //check if o is an instance of arrayDeque
+       if(o instanceof ArrayDeque) {
+           //if so then we downcast it into a variable of static type arrayDeque
+           ArrayDeque<T> otherDeque = (ArrayDeque<T>) o;
+           //check if the sizes are the same
+           if (otherDeque.size() != this.size()) {
+               return false;
+           }
+         //utilize an iterator to perform loop for deep comparison
+           Iterator<T> originalIt = this.iterator();
+           Iterator<T> otherIt = otherDeque.iterator();
+           //while loooping through the original iterator, check if the values of .next() are the same
+           while(originalIt.hasNext()){
+               if(Objects.equals(originalIt.next(), otherIt.next())) {
+                   return false;
+               }
+           }
+       }
         return true;
     }
-    //returns iterator
+
    @Override
+ /*  Returns iterator object.*/
     public Iterator<T> iterator() {
         return new ArrayDequeIterator();
     }

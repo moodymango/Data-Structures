@@ -132,7 +132,7 @@ public class ArrayDequeTest {
         int last = testDeque.get(testDeque.size() - 1) ;
 
         for (int item : testDeque) {
-            System.out.println("item is " + item);
+//            System.out.println("item is " + item);
         }
     }
     @Test
@@ -152,7 +152,7 @@ public class ArrayDequeTest {
         //last el
         double last = testDeque.get(testDeque.size() - 1);
         for (double item : testDeque) {
-            System.out.println("item is "+ item);
+//            System.out.println("item is "+ item);
         }
     }
     @Test
@@ -236,6 +236,38 @@ public class ArrayDequeTest {
         assertTrue(d2 == 8.0);
         assertTrue(d3 == 9.0);
         assertTrue(d4 == 10.0);
+    }
+    @Test
+    public void testEquality() {
+        //instantiate two different ArrayDeques
+        ArrayDeque<Integer> d1 = new ArrayDeque<>();
+        ArrayDeque<Integer> d2 = new ArrayDeque<>();
+        int N = 50000;
+        for(int i = 0; i < N; i++) {
+            //instantiate random number btw 0 and 5
+            int operationNum = StdRandom.uniform(0, 3);
+            if (operationNum == 0) {
+                int randVal = StdRandom.uniform(0, 500);
+                d1.addLast(randVal);
+                d2.addLast(randVal);
+            } else if(operationNum == 1){
+                int randVal = StdRandom.uniform(0, 50);
+                d1.addFirst(randVal);
+                d2.addFirst(randVal);
+            }else if(operationNum == 2) {
+                if(!d1.isEmpty()) {
+                    d1.removeLast();
+                    d2.removeLast();
+                }
+            }else {
+                if(!d1.isEmpty()) {
+                    d1.removeFirst();
+                    d2.removeFirst();
+                }
+            }
+        }
+        //check the equality of both tests
+        assertEquals(d1.size(), d2.size());
     }
 
 }
