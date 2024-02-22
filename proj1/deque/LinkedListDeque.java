@@ -194,7 +194,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     }
       //returns an iterator method
       @Override
-       public Iterator<T> iterator(){
+      public Iterator<T> iterator(){
             return new LLIterator();
        }
        private class LLIterator implements Iterator<T> {
@@ -219,7 +219,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
 
     /*Returns whether the parameter o is equal to the deque*/
    @Override
-    public boolean equals(Object o) {
+   public boolean equals(Object o) {
        if (o == null) {
            return false;
        }

@@ -141,12 +141,15 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         if(size == 0) {
             return null;
         } else {
+            //we save the value of the array
             T removed = items[rear];
             if(front == rear) {
-                //else if there is only one element in the array, we save the value of the array , reassign front and -1 to 0, and decrement size, return deleted item
+                //else if there is only one element in the array
                 items[rear] = null;
+                //reassign front and -1 to 0,
                 front = -1;
                 rear = -1;
+               //reassign size to 0
                 size = 0;
             } else{
                 //else we have more than 1 el in our arr
@@ -259,7 +262,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             idx = (idx + 1 ) % items.length;
             return currVal;
         }
-       @Override
+        @Override
         public boolean hasNext() {
             return totalEl < size;
         }
