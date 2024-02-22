@@ -23,13 +23,7 @@ public class MaxArrayDequeTest {
         public int compare(String str1, String str2) {
             int len1 = str1.length();
             int len2 = str2.length();
-            if (len1 - len2 > 0) {
-                return 1;
-            } else if (len1 - len2 < 0) {
-                return -1;
-            } else {
-                return 0;
-            }
+           return len1 - len2;
         }
     }
    /* compares which int is the biggest*/
@@ -50,11 +44,11 @@ public class MaxArrayDequeTest {
         for (String word : testArr) {
             testDeque.addLast(word);
         }
-        System.out.println(testDeque.get(testDeque.size - 1));
+        System.out.println(testDeque.get(testDeque.size() - 1));
         String first = testDeque.get(0);
-        String last = testDeque.get(testDeque.size - 1);
+        String last = testDeque.get(testDeque.size() - 1);
 
-        System.out.println(testDeque.comp.compare(first, last)); // "h" is 1 times greater than G, aka comes later in the alphabet
+        System.out.println(comp.compare(first, last)); // "h" is 1 times greater than G, aka comes later in the alphabet
     }
     @Test
     public void maxArrayDequeMax () {

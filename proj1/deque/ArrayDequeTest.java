@@ -132,60 +132,6 @@ public class ArrayDequeTest {
         assertTrue(removedFirst == 8);
     }
     @Test
-    public void deepCopy() {
-        int [] items = {8,7,6,5,12,11,10,9};
-        ArrayDeque<Integer> testDeque = new ArrayDeque<>();
-        testDeque.addFirst(8);
-        testDeque.addFirst(9);
-        testDeque.addFirst(10);
-        testDeque.addFirst(11);
-        testDeque.addFirst(12);
-        testDeque.addLast(7);
-        testDeque.addLast(6);
-        testDeque.addLast(5);
-
-        ArrayDeque<Integer> copiedDeque = new ArrayDeque<>(testDeque);
-        System.out.println("test deque is " + testDeque);
-        assertEquals(copiedDeque.removeLast(), testDeque.removeLast());
-    }
-    @Test
-    public void checkisEquals() {
-        ArrayDeque<Integer> testDeque = new ArrayDeque<>();
-        testDeque.addFirst(8);
-        testDeque.addFirst(9);
-        testDeque.addFirst(10);
-        testDeque.addFirst(11);
-        testDeque.addFirst(12);
-        testDeque.addLast(7);
-        testDeque.addLast(6);
-        testDeque.addLast(5);
-
-        ArrayDeque<Integer> copy = new ArrayDeque<>(testDeque);
-        assertTrue(testDeque.equals(copy));
-    }
-    @Test
-    public void checkNotEquals () {
-        ArrayDeque<Integer> testDeque = new ArrayDeque<>();
-        testDeque.addFirst(8);
-        testDeque.addFirst(9);
-        testDeque.addFirst(10);
-        testDeque.addFirst(11);
-        testDeque.addFirst(12);
-        testDeque.addLast(7);
-        testDeque.addLast(6);
-        testDeque.addLast(5);
-
-        ArrayDeque<Integer> copy = new ArrayDeque<>(testDeque);
-
-        //remove first and last element
-        testDeque.removeFirst();
-        testDeque.removeLast();
-
-        //now copy deque
-
-        assertFalse(testDeque.equals(copy));
-    }
-    @Test
     public void iteratorTest() {
         int[] items = {8, 7, 6, 5, 12, 11, 10, 9};
         ArrayDeque<Integer> testDeque = new ArrayDeque<>();

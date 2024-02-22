@@ -16,8 +16,8 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
    // @source - https://freedium.cfd/https://medium.com/@ohermans1/breaking-free-from-fixed-array-sizes-the-power-of-dynamic-resizing-abf81df691e7
     private double maxLoadFactor = 0.75;
     private double minLoadFactor = 0.25;
-    T[] items;
-    int size;
+    private T[] items;
+    private int size;
    /*create front and rear instance variables to keep track of how much space we use in the circular queue*/
    //when we delete from the front, the front pointer is incremented
     public int front = -1;
@@ -27,18 +27,18 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         items = (T[]) new Object[8];
         size = 0;
     }
-   /*creates a deep copy of  other deque*/
-    public ArrayDeque(ArrayDeque<T> other) {
-        //create an empty array with the same size of the other array and assign it to newCopy.items
-        this.items = (T[]) new Object[other.size];
-        this.size = other.size;
-        this.front = other.front;
-        this.rear = other.rear;
-        this.minLoadFactor = other.minLoadFactor;
-        this.maxLoadFactor = other.maxLoadFactor;
-        //could simply use System Copy?
-        System.arraycopy(other.items, 0, this.items, 0, other.size);
-    }
+//   /*creates a deep copy of  other deque*/
+//    public ArrayDeque(ArrayDeque<T> other) {
+//        //create an empty array with the same size of the other array and assign it to newCopy.items
+//        this.items = (T[]) new Object[other.size];
+//        this.size = other.size;
+//        this.front = other.front;
+//        this.rear = other.rear;
+//        this.minLoadFactor = other.minLoadFactor;
+//        this.maxLoadFactor = other.maxLoadFactor;
+//        //could simply use System Copy?
+//        System.arraycopy(other.items, 0, this.items, 0, other.size);
+//    }
     /*adds item t to the front of the deque*/
    @Override
     public void addFirst(T item) {
