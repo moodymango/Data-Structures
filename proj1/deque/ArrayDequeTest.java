@@ -32,7 +32,6 @@ public class ArrayDequeTest {
         testDeque.addLast(11);
         testDeque.addFirst(20);
         int newSize = testDeque.size();
-        System.out.println("old size and new size are "+ oldSize + " " + newSize);
         assertTrue(newSize > oldSize);
     }
     @Test
@@ -242,7 +241,7 @@ public class ArrayDequeTest {
         //instantiate two different ArrayDeques
         ArrayDeque<Integer> d1 = new ArrayDeque<>();
         ArrayDeque<Integer> d2 = new ArrayDeque<>();
-        int N = 10;
+        int N = 5000;
         for (int i = 0; i < N; i++) {
             //instantiate random number btw 0 and 5
             int operationNum = StdRandom.uniform(0, 3);
@@ -267,6 +266,55 @@ public class ArrayDequeTest {
         d1.printDeque();
         d2.printDeque();
         assertEquals(true, d1.equals(d2));
+    }
+    @Test
+    public void testNonEquality() {
+        //instantiate two different ArrayDeques
+        ArrayDeque<Integer> d1 = new ArrayDeque<>();
+        ArrayDeque<Integer> d2 = new ArrayDeque<>();
+        int N = 10;
+        for (int i = 0; i < N; i++) {
+            //instantiate random number btw 0 and 5
+            int operationNum = StdRandom.uniform(0, 4);
+            if (operationNum == 0) {
+                int randVal = StdRandom.uniform(0, 500);
+                d1.addFirst(randVal);
+            } else if (operationNum == 1) {
+                int randVal = StdRandom.uniform(0, 50);
+                d2.addLast(randVal);
+            } else if (operationNum == 2) {
+                if (!d1.isEmpty()) {
+                    d1.removeLast();
+                }
+            } else if (operationNum == 3) {
+                if (!d2.isEmpty()) {
+                    d2.removeLast();
+                }
+            }
+        }
+        //check the equality of both sizes
+        assertEquals(false, d1.size() == d2.size());
+//        check the equality of both deques
+        d1.printDeque();
+        d2.printDeque();
+        assertEquals(false, d1.equals(d2));
+    }
+    @Test
+    public void testNonEqualityDiffObj() {
+        //instantiate two different classes of objs
+        ArrayDeque<Integer> d1 = new ArrayDeque<>();
+        int N = 10;
+        int[] arrInt = new int[N];
+        for (int i = 0; i < N; i++) {
+            //instantiate random number btw 0 and 5
+            int operationNum = StdRandom.uniform(0, 1);
+            if (operationNum == 0) {
+                int randVal = StdRandom.uniform(0, 500);
+                d1.addFirst(randVal);
+                arrInt[0] = randVal;
+            }
+        }
+        assertEquals(false, d1.equals(arrInt));
     }
 
 }

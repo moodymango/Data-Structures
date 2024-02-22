@@ -1,5 +1,7 @@
 package deque;
 
+import com.google.common.base.Objects;
+
 import java.util.Iterator;
 
 /*can implement deque as a stack (Last In, First Out) or queue (First In, First Out)*/
@@ -224,7 +226,27 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
        if (this == o) {
            return true;
        }
-       return false;
+       //check if o is an instance of deque or a linked list deque
+       if (!(o instanceof Deque)) {
+           return false;
+       }
+       if (o instanceof LinkedListDeque) {
+           //typecast o into a ll deque
+           LinkedListDeque<T> otherDeque = new LinkedListDeque<>();
+           //check if the sizes are the same
+           if (this.size() != otherDeque.size()) {
+               return false;
+           }
+           //iterate through both the original and other deque by using original's iterator
+           Iterator<T> originalIt = this.iterator();
+           Iterator<T> otherIt = otherDeque.iterator();
+           while(originalIt.hasNext()) {
+               if (!Objects.equal(originalIt.next(), otherIt.next())) {
+                   return false;
+               }
+           }
+       }
+       return true;
    }
 
 }
