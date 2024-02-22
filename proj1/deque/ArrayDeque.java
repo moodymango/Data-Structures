@@ -111,7 +111,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
     @Override
     public T removeFirst() {
         //first check if the queue is empty, if so return null
-        if (front == -1 && rear == -1) {
+        if (size == 0) {
             return null;
         } else {
             //reassign front and rear to -1 and set the value of the array to null
@@ -143,7 +143,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
   @Override
     public T removeLast() {
         //if the arr is empty, return null
-        if(front == -1 && rear == -1) {
+        if(size == 0) {
             return null;
         } else {
             T removed = items[rear];

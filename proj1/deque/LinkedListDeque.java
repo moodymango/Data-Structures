@@ -27,28 +27,29 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         size = 0;
     }
     /*creates a deep copy of other*/
-    public LinkedListDeque(LinkedListDeque other) {
-        //instantiate a new linked list
-        sentinel = new Node(null);
-        sentinel.prev = sentinel;
-        sentinel.next = sentinel;
-        Node currNew = sentinel;
-        size = 0;
-        //iterate through the other linked list
-        Node currOther = other.sentinel.next;
-        //loop while currOther is not equal to other.sentinel
-        while (currOther != other.sentinel) {
-            //instead of assigning currNew.next the reference to the currOther node, we make a new node passing in currOther's value
-            Node copiedNode = new Node(currOther.value);
-            currNew.next = copiedNode;
-            //assign the prev of the copied node to be currNew
-            copiedNode.prev = currNew;
-            //reassign currNew to the copied node to continue iterating through our new deque
-            currNew = copiedNode;
-            currOther = currOther.next;
-        }
-    }
- /*   adds new node to the head of the list*/
+//    public LinkedListDeque(LinkedListDeque other) {
+//        //instantiate a new linked list
+//        sentinel = new Node(null);
+//        sentinel.prev = sentinel;
+//        sentinel.next = sentinel;
+//        Node currNew = sentinel;
+//        size = 0;
+//        //iterate through the other linked list
+//        Node currOther = other.sentinel.next;
+//        //loop while currOther is not equal to other.sentinel
+//        while (currOther != other.sentinel) {
+//            //instead of assigning currNew.next the reference to the currOther node, we make a new node passing in currOther's value
+//            Node copiedNode = new Node(currOther.value);
+//            currNew.next = copiedNode;
+//            //assign the prev of the copied node to be currNew
+//            copiedNode.prev = currNew;
+//            //reassign currNew to the copied node to continue iterating through our new deque
+//            currNew = copiedNode;
+//            currOther = currOther.next;
+//        }
+//    }
+ /*   Adds new node to the head of the list*/
+    @Override
     public void addFirst(T value) {
         //first value in the doubly linked list is the next node after the sentinel
         //first we grab the reference to sentinel's current next and save it to make note of it's prev value
@@ -66,7 +67,8 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         //increment size by 1 and reassign;
         size += 1;
     }
- /*   adds new node to the tail of the list*/
+ /*   Adds new node to the tail of the list*/
+ @Override
     public void addLast(T value) {
         //sentinel node also acts as our last node, if we can find the reference to the sentinel node's previous, we can find the tail
         //declare newLast node and assign it the instantiation of new node passing in value
@@ -84,21 +86,14 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         //increment size by 1 and reassign;
         size += 1;
     }
-/*   checks to see if there are any nodes in our list*/
-    public boolean isEmpty() {
-        //if the sentinel's.next property is pointing to itself, we have an empty list
-        //if size is zero, we have no nodes
-       if (size == 0) {
-           return true;
-       }
-        return false;
-    }
-  /* returns the number of nodes in the ll*/
+
+  /* Returns the number of nodes in the ll*/
+  @Override
     public int size() {
         return size;
     }
-    //the head will never be null, so we can simply access the curr head via the sentinel
     /*Prints the values in the deque from first to last, separated by a space. Once all the values have been printed, print out a new line.*/
+   @Override
     public void printDeque() {
     //iterate through the deque
         //initiate first node at sentinel.next
@@ -118,7 +113,8 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         }
         System.out.println(String.join(" ", values));
     }
-    /*removes the first node in the deque and returns it's value'*/
+    /*Removes the first node in the deque and returns it's value'*/
+    @Override
     public T removeFirst() {
         //first check if  the deque is empty, if not, remove the first
         if (isEmpty()) {
@@ -137,7 +133,8 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
             size--;
             return currVal;
     }
-    /*removes the last node in the deque and returns its value*/
+    /*Removes the last node in the deque and returns its value*/
+   @Override
     public T removeLast() {
         //if the deque is empty, return null
         Node currNode = sentinel.prev;
@@ -155,7 +152,8 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         return currNode.value;
 
     }
-   /*iteratively gets the item at the given index*/
+   /*Iteratively gets the item at the given index*/
+   @Override
     public T get(int idx) {
         //declare currNode at currNode.next
         Node currNode = sentinel.next;
@@ -172,7 +170,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         }
         return null;
     }
- /*  recursively gets the value of the node at the desired idx*/
+ /*Recursively gets the value of the node at the desired idx*/
     public T getRecursive(int idx) {
         Node currNode = sentinel.next;
         int depth = 0;
@@ -193,6 +191,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         return getRecursiveHelper(curr.next, idx, ++depth);
     }
       //returns an iterator method
+      @Override
        public Iterator<T> iterator(){
             return new LLIterator();
        }
@@ -207,7 +206,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
               return (curr != sentinel);
             }
             //next method returns the current val and moves forward to next item
-            public T next (){
+            public T next () {
                 //save value of the curr node
                 T currVal = curr.value;
                 //move forward in the ll by reassign curr to curr.next
@@ -216,9 +215,10 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
             }
        }
 
-    /*returns whether the parameter o is equal to the deque*/
+    /*Returns whether the parameter o is equal to the deque*/
+   @Override
     public boolean equals(Object o) {
-        return false;
+        return this == o;
     }
 
 }

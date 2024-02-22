@@ -134,11 +134,8 @@ public class ArrayDequeTest {
         int first = testDeque.get(0);
         //last el
         int last = testDeque.get(testDeque.size() - 1) ;
-        System.out.println("first el is " + first);
-        System.out.println("last el is " + last);
 
         for (int item : testDeque) {
-            System.out.println("looping through arrayDeque");
             System.out.println("item is " + item);
         }
     }
@@ -192,6 +189,7 @@ public class ArrayDequeTest {
             testDeque.removeLast();
         }
         assertTrue(testDeque.size() == 0);
+        assertNull(testDeque.removeLast());
     }
     @Test
     public void addRemoveLastIsEmptyRandom() {
@@ -205,6 +203,22 @@ public class ArrayDequeTest {
             } else{
                 if(testD.size() > 0) {
                     testD.removeLast();
+                }
+            }
+        }
+    }
+    @Test
+    public void addRemoveFirstIsEmptyRandom() {
+        ArrayDeque<Integer> testD = new ArrayDeque<>();
+        int N = 20000;
+        for (int i = 0; i < N; i++) {
+            int operationNum = StdRandom.uniform(0, 3);
+            if (operationNum == 0) {
+                int randVal = StdRandom.uniform(0, 500);
+                testD.addFirst(randVal);
+            } else{
+                if(testD.size() > 0) {
+                    testD.removeFirst();
                 }
             }
         }
