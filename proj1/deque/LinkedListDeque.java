@@ -196,7 +196,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     }
     
     private T getRecursiveHelper(Node curr, int idx, int depth) {
-        //depth represents a counter of sorts to help us keep track of where we are in our linked list
+        //depth keeps track of where we are in our linked list
         //if depth is equal to the idx, simply return the value of the node
         if (curr == sentinel) {
             return null;
@@ -218,7 +218,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         //instantiate a curr node variable to keep track of what node we are on in our ll.
         private Node curr;
         
-        public LLIterator() {
+         private LLIterator() {
             curr = sentinel.next;
         }
         
