@@ -254,6 +254,7 @@ public class ArrayDequeTest {
         assertTrue(d3 == 9.0);
         assertTrue(d4 == 10.0);
     }
+    
     @Test
     public void getInvalidIdx() {
         double[] items = {8.0, 9.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0};
@@ -272,6 +273,7 @@ public class ArrayDequeTest {
         assertTrue(d4 == 10.0);
         assertNull(testDeque.get(4));
     }
+    
     @Test
     public void testRandomAdd() {
         //instantiate two different ArrayDeques
@@ -297,6 +299,7 @@ public class ArrayDequeTest {
             }
         }
     }
+    
     @Test
     public void testEquality() {
         //instantiate two different ArrayDeques

@@ -208,7 +208,7 @@ public class LinkedListDequeTest {
 //            System.out.println("Current string is " + loop.next());
 //        }
         //enhanced for in loop
-      assertEquals(true, testOne.equals(testTwo));
+        assertEquals(true, testOne.equals(testTwo));
     }
     
 }

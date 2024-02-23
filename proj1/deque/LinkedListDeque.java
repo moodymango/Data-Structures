@@ -264,5 +264,4 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         }
         return true;
     }
-    
 }
