@@ -193,6 +193,22 @@ public class LinkedListDequeTest {
         }
     }
     
-    
+    @Test
+    public void deepCopy() {
+        LinkedListDeque<String> testOne = new LinkedListDeque();
+        LinkedListDeque<String> testTwo = new LinkedListDeque<>();
+        String[] test = {"Bananas", "Mangos", "Peaches", "Grapes", "Apples", "Pears", "Plums", "Pineapples"};
+        for (int i = 0; i < test.length; i++) {
+            testOne.addFirst(test[i]);
+            testTwo.addFirst(test[i]);
+        }
+//        //instantiate iterator object from testList
+//        Iterator<String> loop = testList.iterator();
+//        while(loop.hasNext()) {
+//            System.out.println("Current string is " + loop.next());
+//        }
+        //enhanced for in loop
+      assertEquals(true, testOne.equals(testTwo));
+    }
     
 }

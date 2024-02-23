@@ -247,8 +247,8 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
             return false;
         }
         if (o instanceof LinkedListDeque) {
-            //typecast o into a ll deque
-            LinkedListDeque<T> otherDeque = new LinkedListDeque<>();
+            //downcast o into a ll deque
+            LinkedListDeque<T> otherDeque = (LinkedListDeque<T>) o;
             //check if the sizes are the same
             if (this.size() != otherDeque.size()) {
                 return false;
@@ -257,9 +257,6 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
             Iterator<T> originalIt = this.iterator();
             Iterator<T> otherIt = otherDeque.iterator();
             while (originalIt.hasNext()) {
-//                if (!originalIt.equals(otherIt.next())) {
-//                    return false;
-//                }
                 if (!Objects.equal(originalIt.next(), otherIt.next())) {
                     return false;
                 }
