@@ -13,13 +13,13 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         private Node prev;
         private Node next;
         
-        //every node is instantiated only with a value, we reassign the next and prev based on it's position in the list
+        //every node is instantiated only with a value
+        //we reassign the next and prev based on it's position in the list
         private Node(T d) {
             value = d;
         }
     }
     
-    /*  ensure size and sentinel node variables cannot be accessed from child class of outside package*/
     private int size;
     /*using sentinel nodes eliminates many edge cases that arise in implementing ll operations*/
     //want sentinel to be specific Node's containing T value, not just any raw list Element
@@ -44,7 +44,8 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
 //        Node currOther = other.sentinel.next;
 //        //loop while currOther is not equal to other.sentinel
 //        while (currOther != other.sentinel) {
-//            //instead of assigning currNew.next the reference to the currOther node, we make a new node passing in currOther's value
+//            //instead of assigning currNew.next the reference to the currOther node
+//            we make a new node passing in currOther's value
 //            Node copiedNode = new Node(currOther.value);
 //            currNew.next = copiedNode;
 //            //assign the prev of the copied node to be currNew
@@ -58,7 +59,8 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     @Override
     public void addFirst(T value) {
         //first value in the doubly linked list is the next node after the sentinel
-        //first we grab the reference to sentinel's current next and save it to make note of it's prev value
+        //first we grab the reference to sentinel's current next
+        //save it to make note of it's prev value
         Node currFirst = sentinel.next;
         //declare and assign newFirst to  instantiation of node passing in value
         Node newFirst = new Node(value);
@@ -77,12 +79,12 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
     /*   Adds new node to the tail of the list*/
     @Override
     public void addLast(T value) {
-        //sentinel node also acts as our last node, if we can find the reference to the sentinel node's previous, we can find the tail
         //declare newLast node and assign it the instantiation of new node passing in value
         Node newLast = new Node(value);
         //save a reference to the currLast by access sentinel.prev
         Node currLast = sentinel.prev;
-        //first we reassign the next value of the currLast to be the newLast, since its old next value was sentinel
+        //first we reassign the next value of the currLast to be the newLast,
+        // since its old next value was sentinel
         currLast.next = newLast;
         //reassign the prev of the newLast to point to the currLast
         newLast.prev = currLast;
@@ -100,7 +102,8 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         return size;
     }
     
-    /*Prints the values in the deque from first to last, separated by a space. Once all the values have been printed, print out a new line.*/
+    /*Prints the values in the deque from first to last, separated by a space.
+    Once all the values have been printed, print out a new line.*/
     @Override
     public void printDeque() {
         //iterate through the deque
@@ -110,7 +113,6 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
             return;
         }
         int counter = 0;
-        //instantiate array of length size in order to hold values of the deque, with string type since we will print the values as strings
         String[] values = new String[size];
         //while the counter is less than or equal to the size variable
         while (counter < size) {
@@ -136,7 +138,8 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         currFirst.next.prev = currFirst.prev;
         //reassign the sentinel's next to the currNode's next
         sentinel.next = currFirst.next;
-        //make sure to remove pointers from the removed node by assigning its next and prev properties as null
+        //make sure to remove pointers from the removed node
+        // by assigning its next and prev properties as null
         currFirst.next = currFirst.prev = null;
         //decrement and return size
         size--;
@@ -169,10 +172,11 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         //declare currNode at currNode.next
         Node currNode = sentinel.next;
         int count = 0;
-        //use while loop to iterate through the linkedList, keep loop iterating as long as the currNode is not pointing to the sentinel
+        //keep loop iterating as long as the currNode is not pointing to the sentinel
         while (currNode != sentinel) {
-            //if the value of the counter is equal to the value of the idx, return the value at the currNode
+            //if the value of the counter is equal to the value of the idx
             if (idx == count) {
+                // return the value at the currNode
                 return currNode.value;
             }
             //else we increment counter by one, and reassign the currNode to currNode.next
@@ -187,7 +191,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         Node currNode = sentinel.next;
         int depth = 0;
         // @source - recursive pattern found in top answer of following stack overflow query:
-        //https://stackoverflow.com/questions/10567102/how-to-use-an-index-variable-in-a-recursion
+        //how to use idx variable in recursion
         return getRecursiveHelper(currNode, idx, depth);
     }
     
@@ -219,7 +223,8 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         }
         
         public boolean hasNext() {
-            //as long as the curr node.next is NOT pointing to the sentinel, we have a valid next value;
+            //as long as the curr node.next is NOT pointing to the sentinel
+            // we have a valid next value;
             return (curr != sentinel);
         }
         
