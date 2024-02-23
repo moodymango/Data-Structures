@@ -198,13 +198,19 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
         //round the capacity to the closest upper int
         int rounded = (int) Math.ceil(capacity);
         rounded = Math.max(1, rounded);
+        //check if capacity is zero, if so, simply
         T[] newItems = (T[]) new Object[rounded];
         for (int i = 0; i < size; i++) {
             newItems[i] = items[(front + i) % items.length];
         }
         items = newItems;
-        front = 0;
-        rear = size - 1;
+        if (size == 0) {
+            front = -1;
+            rear = -1;
+        } else {
+            front = 0;
+            rear = size - 1;
+        }
     }
     
     /*Returns a ratio of memory that program ues at any given time*/

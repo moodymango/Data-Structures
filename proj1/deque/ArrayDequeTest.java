@@ -237,7 +237,7 @@ public class ArrayDequeTest {
     }
     
     @Test
-    public void getMethodWords() {
+    public void getMethodWorkss() {
         double[] items = {8.0, 9.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0};
         ArrayDeque<Double> testDeque = new ArrayDeque<>();
         testDeque.addFirst(8.0);
@@ -254,7 +254,49 @@ public class ArrayDequeTest {
         assertTrue(d3 == 9.0);
         assertTrue(d4 == 10.0);
     }
-    
+    @Test
+    public void getInvalidIdx() {
+        double[] items = {8.0, 9.0, 10.0, 0.0, 0.0, 0.0, 0.0, 1.0};
+        ArrayDeque<Double> testDeque = new ArrayDeque<>();
+        testDeque.addFirst(8.0);
+        testDeque.addLast(9.0);
+        testDeque.addLast(10.0);
+        testDeque.addFirst(1.0);
+        double d1 = testDeque.get(0);
+        double d2 = testDeque.get(1);
+        double d3 = testDeque.get(2);
+        double d4 = testDeque.get(3);
+        assertTrue(d1 == 1.0);
+        assertTrue(d2 == 8.0);
+        assertTrue(d3 == 9.0);
+        assertTrue(d4 == 10.0);
+        assertNull(testDeque.get(4));
+    }
+    @Test
+    public void testRandomAdd() {
+        //instantiate two different ArrayDeques
+        ArrayDeque<Integer> d1 = new ArrayDeque<>();
+        int N = 500000;
+        for (int i = 0; i < N; i++) {
+            //instantiate random number btw 0 and 5
+            int operationNum = StdRandom.uniform(0, 4);
+            if (operationNum == 0) {
+                int randVal = StdRandom.uniform(0, 500);
+                d1.addLast(randVal);
+            } else if (operationNum == 1) {
+                int randVal = StdRandom.uniform(0, 50);
+                d1.addFirst(randVal);
+            } else if (operationNum == 2) {
+                if (!d1.isEmpty()) {
+                    d1.removeLast();
+                }
+            } else {
+                if (!d1.isEmpty()) {
+                    d1.removeFirst();
+                }
+            }
+        }
+    }
     @Test
     public void testEquality() {
         //instantiate two different ArrayDeques
@@ -292,7 +334,7 @@ public class ArrayDequeTest {
         //instantiate two different ArrayDeques
         ArrayDeque<Integer> d1 = new ArrayDeque<>();
         ArrayDeque<Integer> d2 = new ArrayDeque<>();
-        int N = 10;
+        int N = 10000;
         for (int i = 0; i < N; i++) {
             //instantiate random number btw 0 and 5
             int operationNum = StdRandom.uniform(0, 4);
