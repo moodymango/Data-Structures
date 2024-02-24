@@ -218,7 +218,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         //instantiate a curr node variable to keep track of what node we are on in our ll.
         private Node curr;
         
-         private LLIterator() {
+        private LLIterator() {
             curr = sentinel.next;
         }
         
