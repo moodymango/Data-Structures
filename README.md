@@ -8,6 +8,19 @@ https://sp21.datastructur.es/index.html
 https://www.gradescope.com/
 
 ## Coursework Score
+
+**Lab 1 : Welcome to Java**
+
+32/32
+
+**Lab 2 : Debugging**
+
+64 / 64
+
+**Lab 3 : Randomized Testing and Timing**
+
+64 / 64
+
 ***Project 0: 2048**
 
 632.889 / 640
