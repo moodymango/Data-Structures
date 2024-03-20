@@ -224,7 +224,7 @@ public class LinkedListDeque<T> implements Iterable<T>, Deque<T> {
         
         public boolean hasNext() {
             //as long as the curr node.next is NOT pointing to the sentinel
-            // we have a valid next value;
+            // we have a valid next value
             return (curr != sentinel);
         }
         

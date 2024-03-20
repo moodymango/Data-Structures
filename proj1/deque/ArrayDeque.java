@@ -253,7 +253,7 @@ public class ArrayDeque<T> implements Iterable<T>, Deque<T> {
             //utilize an iterator to perform loop for deep comparison
             Iterator<T> originalIt = this.iterator();
             Iterator<T> otherIt = otherDeque.iterator();
-            //while loooping through the original iterator
+            //while looping through the original iterator
             //check if the values of .next() are the same
             while (originalIt.hasNext()) {
                 if (!Objects.equals(originalIt.next(), otherIt.next())) {
