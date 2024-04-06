@@ -4,27 +4,31 @@ ArrayDeque:
 
 Q: Give an example of at least one idea from the staff solution that would have made your solution better (if any).
 
-A: 
+A: No staff solution to look at! 
 
 Q: What's something you felt proud of in your code, if anything?
 
-A:
+A: I was especially proud of my circular array implementation for the ArrayDeque. This was my first ever exposure to the concept of a circular and dynamically resizing arrays, and so I spent quite a bit of time learning about the significance of circular arrays via this link:
+https://www.youtube.com/watch?v=dn01XST9-bI*/, and even consulted some resources to consider how to properly resize an array.
+I learned about load factors that determine the ratio of elements in the array and the array size, and included private sizeSmaller and sizeBigger methods that uses a max and min load factor to determine when to size the array either up or down.
 
 Q: What's something that was particularly inelegant in your code, if anything?
 
-A:
+A: My resize factor. I ran into a bug when resizing my array. Whenever I calculated the capacity variable which determines the size of my resized, array, sometimes this value would result to 0. So to patch this up, on line 201, I added a Math.max method comparing the capacity and 1, forcing me to have an array of minimum size 1.
+I also have an if conditional on line 208 that checks whether or not the size of the old array before resizing is zero. I ran into a bug where my front and rear pointer variables were assigned erronously  to be 0 and size - 1, despite the fact that the new array is empty.
+I had to hastily add this conditional to ensure my pointers were reset to -1 in the case of an empty array.
 
 Q: What did you learn by talking to your partner about writing ArrayDeque?
 
-A:
+A: No partner, but I learned about how to cycle through an array using the modulo operator, and how to effectively debug using the Java visualizer.
 
 Q: What do you wish you would have known before writing ArrayDeque, if anything?
 
-A:
+A: I probably would have liked to learn more about casting, since I had to downcast an object to the overriden equals method.
 
 Q: If you wrote ArrayDeque again, what would you do differently, if anything?
 
-A:
+A: I would tweak my resize method to not have to use casting to ensure I am getting an array of minimum size 1.
 
 -----
 
@@ -32,27 +36,28 @@ LinkedListDeque:
 
 Q: Give an example of at least one idea from the staff solution that would have made your solution better (if any).
 
-A: 
+A: No staff solution to look at! 
 
 Q: What's something you felt proud of in your code, if anything?
 
-A:
+A: I'm proud of approaching this problem using a circular linked list with a sentinel node. I learned to appreciate the significance of the sentinel node when it came to checking if my linked list was empty or not.
+And I liked that the presence of the sentinel node allowed me to conceptualize the head and tail properties of a linked list without having to explicitly create variables to reference them.
 
 Q: What's something that was particularly inelegant in your code, if anything?
 
-A:
+A: I would say my deep copy constructor of the linkedlistdeque seems pretty inelegant, I felt like I was repeating myself often for lines 39 - 41.
 
 Q: What did you learn by talking to your partner about writing LinkedListDeque?
 
-A:
+A: No partner, but I feel I really understand how the iterator method works under the hood much better after building out the implementation myself.
 
 Q: What do you wish you would have known before writing LinkedListDeque, if anything?
 
-A:
+A: I probably would have liked to learn more about casting, since I had to downcast an object to the overriden equals method.
 
 Q: If you wrote LinkedListDeque again, what would you do differently, if anything?
 
-A:
+A: Honestly nothing, this was my first time writing a linkedlist with a circular implementation using a sentinel node, so I was really thrilled to practice this.
 
 -----
 
@@ -60,4 +65,4 @@ Meta:
 
 Q: Did you like this design review process? Anything we should do differently next time?
 
-A: 
+A: This is a great opprotuninity to reflect! No notes!
