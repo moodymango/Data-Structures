@@ -55,7 +55,14 @@ public class CapersRepository {
      * @param text String of the text to be appended to the story
      */
     public static void writeStory(String text) {
-        // TODO
+        //first retrieve story bytes from the story file
+        String story = Utils.readContentsAsString(STORY);
+        //write the story, but make sure we read the previous contents first
+        Utils.writeContents(STORY, story, text + "\n");
+        //save the appended story in a variable
+        String appendedStory = Utils.readContentsAsString(STORY);
+        //print the story w/ appended text
+        System.out.println(appendedStory);
     }
 
     /**
