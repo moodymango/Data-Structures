@@ -19,7 +19,7 @@ https://www.gradescope.com/
 | Lab 3 : Randomized Testing and Timing  |    64/64    |     None |
 | Lab 4 : Debugging Mystery              |    32/32    |     None |
 | Lab 5 : Peer Code Review               |     N/A     | Ungraded |
-| Lab 6 : Project 2: Getting Started     |             |     None |
+| Lab 6 : Project 2: Getting Started     |    64/64    |     None |
 | Lab 7 : BST Map                        |             |     None |
 | Lab 8 : Hash Map                       |             |     None |
 | Project 0: 2048                        | 632.889/640 |     None |
