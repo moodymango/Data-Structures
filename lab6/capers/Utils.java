@@ -30,12 +30,23 @@ class Utils {
      *  be a normal file.  Throws IllegalArgumentException
      *  in case of problems. */
     static byte[] readContents(File file) {
+        //checks the file to ensure the files is a normal file (i.e not a
+        // directory), and the pathname exists
         if (!file.isFile()) {
+            //extends runtime exception, indicates that the method has been
+            // passed an illegal argument.
             throw new IllegalArgumentException("must be a normal file");
         }
         try {
+            //file.toPath() - returns a file path object (object used to
+            // locate a file in a file system)
+            //files.readAllBytes - reads all the bytes from a file (returns
+            // an array of bytes) or invalid path exception if path object
+            // cannot be constructed.
             return Files.readAllBytes(file.toPath());
         } catch (IOException excp) {
+            //IO Exception is the base class for exceptions thrown while
+            // accessing information using streams, files, and directories.
             throw new IllegalArgumentException(excp.getMessage());
         }
     }
@@ -44,6 +55,11 @@ class Utils {
      *  be a normal file.  Throws IllegalArgumentException
      *  in case of problems. */
     static String readContentsAsString(File file) {
+        //file must be normal(File.isFile()), otherwise it throws
+        // illArgException
+        
+        //constructs new string by decoding the specified array of bytes
+        // using the specified charset.
         return new String(readContents(file), StandardCharsets.UTF_8);
     }
 
@@ -51,18 +67,36 @@ class Utils {
      *  creating or overwriting it as needed.  Each object in CONTENTS may be
      *  either a String or a byte array.  Throws IllegalArgumentException
      *  in case of problems. */
+    
+    //Object... contents - indicates an arbitrary number of parameters using
+    // an array under the hood.
     static void writeContents(File file, Object... contents) {
         try {
+            //if the file is a directory, and the pathname exists
             if (file.isDirectory()) {
                 throw
                         new IllegalArgumentException("cannot overwrite directory");
             }
+            //BufferedOutputstream - application can write bytes to the
+            // underlying output stream without necessarily calling the
+            // underlying system for each byte written
+            
+            //Files.newOutputStream  - opens or creates a file, returning an
+            // output stream that may be used to write bytes to the file
+            //we have saved the stream as a bufferedOutPut to optimize
+            // performance,
             BufferedOutputStream str =
                     new BufferedOutputStream(Files.newOutputStream(file.toPath()));
+            //iterate through the array of items we wish to add to our file
             for (Object obj : contents) {
+                //if the current obj is an instance of an array of bytes
                 if (obj instanceof byte[]) {
+                    //we write the specified byte to the buffered output
+                    // stream after casting the obj as an array of bytes
                     str.write((byte[]) obj);
                 } else {
+                    //cast the obj into a string, then encode the string into
+                    // a seq of bytes and keeps it in an array
                     str.write(((String) obj).getBytes(StandardCharsets.UTF_8));
                 }
             }
@@ -79,6 +113,8 @@ class Utils {
         try {
             ObjectInputStream in =
                     new ObjectInputStream(new FileInputStream(file));
+            //reads objects sand safe casts the object to get the desired
+            // classType
             T result = expectedClass.cast(in.readObject());
             in.close();
             return result;
@@ -90,6 +126,8 @@ class Utils {
 
     /** Write OBJ to FILE. */
     static void writeObject(File file, Serializable obj) {
+        //calls the write contents method, passing in file and byte array of
+        // objects
         writeContents(file, serialize(obj));
     }
 
