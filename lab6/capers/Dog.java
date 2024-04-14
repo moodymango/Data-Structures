@@ -1,6 +1,8 @@
 package capers;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 
 import static capers.CapersRepository.CAPERS_FOLDER;
@@ -40,8 +42,19 @@ public class Dog implements Serializable {
      * @return Dog read from file
      */
     public static Dog fromFile(String name) {
-        // TODO (hint: look at the Utils file)
-        return null;
+        Dog retrievedDog = null;
+        try {
+            File dogExists = Utils.join(DOG_FOLDER, name);
+            if (!dogExists.isFile()) {
+                throw new FileNotFoundException();
+            } else {
+               retrievedDog = readObject(dogExists, Dog.class);
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        
+        return retrievedDog;
     }
 
     /**
@@ -57,7 +70,19 @@ public class Dog implements Serializable {
      * Saves a dog to a file for future use.
      */
     public void saveDog() {
-        // TODO (hint: don't forget dog names are unique)
+        try {
+            //check if there is a file already with the current instance's name
+            File dogExists = join(DOG_FOLDER, this.name);
+           if (!dogExists.isFile()) {
+               //ensure we create the individual file for the dog if it does
+               // not exist
+               dogExists.createNewFile();
+           }
+            //save the current obj into the file
+            Utils.writeObject(dogExists, this);
+        } catch(IOException excp) {
+            throw new IllegalArgumentException(excp.getMessage());
+        }
     }
 
     @Override
