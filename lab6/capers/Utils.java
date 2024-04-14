@@ -18,7 +18,8 @@ import java.util.Arrays;
 import java.util.Formatter;
 import java.util.List;
 
-
+//important article to help understand what is going on:
+//https://readmedium.com/en/https:/medium.com/@rrlinus5/stream-of-bytes-internal-concept-java-831c4d94ad4c
 /** Assorted utilities.
  *  @author P. N. Hilfinger
  */
@@ -145,6 +146,7 @@ class Utils {
      *  analogous to the {@link java.nio.file.Paths.#get(String, String[])}
      *  method. */
     static File join(File first, String... others) {
+        //forms a path string and returns the file object representing this path
         return Paths.get(first.getPath(), others).toFile();
     }
 
@@ -154,7 +156,10 @@ class Utils {
     /** Returns a byte array containing the serialized contents of OBJ. */
     static byte[] serialize(Serializable obj) {
         try {
+            //saves object to a ByteArrayOutputStream
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            //Creates on object output stream to write objects to the byte
+            // array output stream
             ObjectOutputStream objectStream = new ObjectOutputStream(stream);
             objectStream.writeObject(obj);
             objectStream.close();
