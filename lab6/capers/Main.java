@@ -55,10 +55,17 @@ public class Main {
             String name = args[1];
             String breed = args[2];
             int age = Integer.parseInt(args[3]);
+            Dog newDog = new Dog(name, breed, age);
+            newDog.saveDog();
+            System.out.println(newDog.toString());
             break;
         case "birthday":
             validateNumArgs("birthday", args, 2);
-            // TODO: celebrate this dog's birthday
+            String dogName = args[1];
+            Dog retrievedDog = Dog.fromFile(dogName);
+            retrievedDog.haveBirthday();
+            //now overwrite the file for the current dog
+            retrievedDog.saveDog();
             break;
         default:
             exitWithError(String.format("Unknown command: %s", args[0]));
