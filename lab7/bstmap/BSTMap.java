@@ -1,6 +1,10 @@
 package bstmap;
 
-public class BSTMap implements Map61B<K, V> {
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Set;
+
+public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 /* create an inner class representing a node in the bst*/
     private class Node {
         private K key;
