@@ -7,25 +7,25 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 /* create an inner class representing a node in the bst*/
     private class BSTNode {
         private final K key;
-        private final V value;
+        private V value;
         private BSTNode left;
         private BSTNode right;
+        private int size;
         
         private BSTNode(K key, V val) {
             this.key = key;
             this.value = val;
             this.right = this.left = null;
+            this.size = 1;
+            
         }
 }
     BSTNode root;
-    int size;
     public BSTMap(BSTNode root){
         this.root = root;
-        this.size = 0;
     }
     public BSTMap(){
         this.root = null;
-        this.size = 0;
     }
     
 
@@ -79,26 +79,35 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     @Override
     /* Returns the number of key-value mappings in this map. */
     public int size(){
-        return size;
+        return sizeHelper(root);
+    }
+    private int sizeHelper(BSTNode n){
+        if(n == null) {
+            return 0;
+        }
+        return n.size;
     }
     @Override
     /* Associates the specified value with the specified key in this map. */
     public void put(K key, V value){
-        putRecursive(key, value, root);
-        size++;
+        root = putRecursive(key, value, root);
     }
     private BSTNode putRecursive(K key, V value, BSTNode n){
         //starting at the root, if the node is null, then place a new node there
         if(n == null) {
-            return new BSTNode(key, value);
+            n = new BSTNode(key, value);
+            return n;
+           
         }
         if(key.compareTo(n.key) < 0) {
             n.left = putRecursive(key, value, n.left);
         } else if (key.compareTo(n.key) > 0) {
             n.right = putRecursive(key, value, n.right);
+        } else {
+            n.value = value;
         }
+        n.size = 1 + sizeHelper(n.left) + sizeHelper(n.right);
         return n;
-        
     }
     public void printInOrder(){
         inOrderHelper(root);
