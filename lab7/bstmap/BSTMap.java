@@ -6,8 +6,8 @@ import java.util.Set;
 public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 /* create an inner class representing a node in the bst*/
     private class BSTNode {
-        private K key;
-        private V value;
+        private final K key;
+        private final V value;
         private BSTNode left;
         private BSTNode right;
         
@@ -79,15 +79,39 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     @Override
     /* Returns the number of key-value mappings in this map. */
     public int size(){
-        throw new UnsupportedOperationException();
+        return size;
     }
     @Override
     /* Associates the specified value with the specified key in this map. */
     public void put(K key, V value){
-        throw new UnsupportedOperationException();
-    
+        putRecursive(key, value, root);
+        size++;
     }
-    public void printInOrder(){}
+    private BSTNode putRecursive(K key, V value, BSTNode n){
+        //starting at the root, if the node is null, then place a new node there
+        if(n == null) {
+            return new BSTNode(key, value);
+        }
+        if(key.compareTo(n.key) < 0) {
+            n.left = putRecursive(key, value, n.left);
+        } else if (key.compareTo(n.key) > 0) {
+            n.right = putRecursive(key, value, n.right);
+        }
+        return n;
+        
+    }
+    public void printInOrder(){
+        inOrderHelper(root);
+    }
+    private void inOrderHelper(BSTNode n){
+        //left, root, right
+        if(n == null) {
+            return;
+        }
+        inOrderHelper(n.left);
+        System.out.println(n.key);
+        inOrderHelper(n.right);
+    }
     @Override
     /* Returns a Set view of the keys contained in this map. Not required for Lab 7.
      * If you don't implement this, throw an UnsupportedOperationException. */
