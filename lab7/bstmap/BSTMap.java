@@ -3,6 +3,8 @@ package bstmap;
 import java.util.Iterator;
 import java.util.Set;
 
+//compare implementation to the following link:
+//https://algs4.cs.princeton.edu/32bst/BST.java.html
 public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 /* create an inner class representing a node in the bst*/
     private class BSTNode {
@@ -20,10 +22,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             
         }
 }
-    BSTNode root;
-    public BSTMap(BSTNode root){
-        this.root = root;
-    }
+    private BSTNode root;
     public BSTMap(){
         this.root = null;
     }
@@ -64,7 +63,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     public V get (K key){
         return getRecursive(key, root);
     }
-    public V getRecursive(K key, BSTNode n){
+    private V getRecursive(K key, BSTNode n){
         if (n == null) {
             return null;
         }
