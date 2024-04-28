@@ -1,16 +1,17 @@
 package hashmap;
 
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  *  A hash table-backed Map implementation. Provides amortized constant time
  *  access to elements via get(), remove(), and put() in the best case.
  *
  *  Assumes null keys will never be inserted, and does not resize down upon remove().
- *  @author YOUR NAME HERE
+ *  @author Imma Duverger
  */
 public class MyHashMap<K, V> implements Map61B<K, V> {
-
     /**
      * Protected helper class to store key/value pairs
      * The protected qualifier allows subclass access
@@ -27,12 +28,27 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     /* Instance Variables */
     private Collection<Node>[] buckets;
-    // You should probably define some more!
+    /*  default variables if initial size and load factor are not provided*/
+    private final double  defaultLoadFactor = 0.75;
+    private final int defaultSize = 16;
+    
+    //load factor computed as N/M
+    //N is num of elements in collection
+    //M is the total num of buckets (array length)
+    private double loadFactor;
+    
 
     /** Constructors */
-    public MyHashMap() { }
+    public MyHashMap() {
+        //remember, cannot create an array of parameterized type, so the
+        // following will not work:
+//        buckets = new Collection<Node>[defaultSize];
+        buckets = new Collection[defaultSize];
+    }
 
-    public MyHashMap(int initialSize) { }
+    public MyHashMap(int initialSize) {
+        buckets = new Collection[initialSize];
+    }
 
     /**
      * MyHashMap constructor that creates a backing array of initialSize.
@@ -41,7 +57,10 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      * @param initialSize initial size of backing array
      * @param maxLoad maximum load factor
      */
-    public MyHashMap(int initialSize, double maxLoad) { }
+    public MyHashMap(int initialSize, double maxLoad) {
+        buckets = new Collection[initialSize];
+        loadFactor = maxLoad;
+    }
 
     /**
      * Returns a new node to be placed in a hash table bucket
@@ -84,8 +103,72 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     private Collection<Node>[] createTable(int tableSize) {
         return null;
     }
-
-    // TODO: Implement the methods of the Map61B Interface below
-    // Your code won't compile until you do so!
-
+    
+    /** Removes all of the mappings from this map. */
+    @Override
+    public void clear(){
+        throw new UnsupportedOperationException();
+    }
+    
+    /** Returns true if this map contains a mapping for the specified key. */
+   @Override
+    public boolean containsKey(K key){
+       return false;
+   }
+    
+    /**
+     * Returns the value to which the specified key is mapped, or null if this
+     * map contains no mapping for the key.
+     */
+    @Override
+    public V get(K key){
+        return null;
+    }
+    
+    /** Returns the number of key-value mappings in this map. */
+    @Override
+    public int size(){
+        return 0;
+    }
+    
+    /**
+     * Associates the specified value with the specified key in this map.
+     * If the map previously contained a mapping for the key,
+     * the old value is replaced.
+     */
+    @Override
+   public void put(K key, V value){
+        throw new UnsupportedOperationException();
+    }
+    
+    /** Returns a Set view of the keys contained in this map. */
+    @Override
+    public Set<K> keySet(){
+        throw new UnsupportedOperationException();
+    }
+    
+    /**
+     * Removes the mapping for the specified key from this map if present.
+     * Not required for Lab 8. If you don't implement this, throw an
+     * UnsupportedOperationException.
+     */
+    @Override
+    public V remove(K key){
+        return null;
+    }
+    
+    /**
+     * Removes the entry for the specified key only if it is currently mapped to
+     * the specified value. Not required for Lab 8. If you don't implement this,
+     * throw an UnsupportedOperationException.
+     */
+    @Override
+    public V remove(K key, V value){
+        return null;
+    }
+    
+    @Override
+    public Iterator<K> iterator(){
+        throw new UnsupportedOperationException();
+    }
 }
