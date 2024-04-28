@@ -116,6 +116,8 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
       //use buckets.length to instantiate new collection[] and reassign
         // bucket to the new instantiation
         buckets = new Collection[buckets.length];
+        keys = new HashSet<>();
+        size = 0;
     }
     
     /** Returns true if this map contains a mapping for the specified key. */
