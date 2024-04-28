@@ -1,5 +1,6 @@
 package hashmap;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
@@ -28,14 +29,10 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     /* Instance Variables */
     private Collection<Node>[] buckets;
-    /*  default variables if initial size and load factor are not provided*/
-    private final double  defaultLoadFactor = 0.75;
-    private final int defaultSize = 16;
-    
-    //load factor computed as N/M
-    //N is num of elements in collection
-    //M is the total num of buckets (array length)
+
     private double loadFactor;
+    
+    private int size;
     
 
     /** Constructors */
@@ -43,11 +40,16 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         //remember, cannot create an array of parameterized type, so the
         // following will not work:
 //        buckets = new Collection<Node>[defaultSize];
-        buckets = new Collection[defaultSize];
+        buckets = new Collection[16];
+        loadFactor = 0.75;
+        size = 0;
     }
 
     public MyHashMap(int initialSize) {
         buckets = new Collection[initialSize];
+        loadFactor = 0.75;
+        size = 0;
+        
     }
 
     /**
@@ -60,13 +62,14 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     public MyHashMap(int initialSize, double maxLoad) {
         buckets = new Collection[initialSize];
         loadFactor = maxLoad;
+        size = 0;
     }
 
     /**
      * Returns a new node to be placed in a hash table bucket
      */
     private Node createNode(K key, V value) {
-        return null;
+        return new Node(key, value);
     }
 
     /**
@@ -88,7 +91,8 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      * OWN BUCKET DATA STRUCTURES WITH THE NEW OPERATOR!
      */
     protected Collection<Node> createBucket() {
-        return null;
+        //selected ArrayList at random
+        return new ArrayList<>();
     }
 
     /**
@@ -107,7 +111,9 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     /** Removes all of the mappings from this map. */
     @Override
     public void clear(){
-        throw new UnsupportedOperationException();
+      //use buckets.length to instantiate new collection[] and reassign
+        // bucket to the new instantiation
+        buckets = new Collection[buckets.length];
     }
     
     /** Returns true if this map contains a mapping for the specified key. */
@@ -122,13 +128,13 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      */
     @Override
     public V get(K key){
-        return null;
+        //
     }
     
     /** Returns the number of key-value mappings in this map. */
     @Override
     public int size(){
-        return 0;
+        return size;
     }
     
     /**
@@ -170,5 +176,20 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     @Override
     public Iterator<K> iterator(){
         throw new UnsupportedOperationException();
+    }
+    //PRIVATE HELPER METHODS
+    private double calculateLoadFactor () {
+        return size / buckets.length;
+    }
+    private boolean shouldResize(){
+        if (calculateLoadFactor() > loadFactor) {
+            return true;
+        }
+        return false;
+    }
+  /*  returns valid index for element in the hash table*/
+    private int hashIndex(int hash){
+       //used to account for negative hash values
+        return Math.floorMod(hash, buckets.length);
     }
 }
