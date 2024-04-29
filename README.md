@@ -21,7 +21,7 @@ https://www.gradescope.com/
 | Lab 5 : Peer Code Review               |     N/A     | Ungraded |
 | Lab 6 : Project 2: Getting Started     |    64/64    |     None |
 | Lab 7 : BST Map                        |    64/64    |     None |
-| Lab 8 : Hash Map                       |             |     None |
+| Lab 8 : Hash Map                       |    64/64    |     None |
 | Project 0: 2048                        | 632.889/640 |     None |
 | Project 1: ArrayDeque, LinkedListDeque |   640/640   |     None |
 | Project 1: Extra Credit                |             |     None |
