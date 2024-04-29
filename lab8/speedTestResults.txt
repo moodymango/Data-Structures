@@ -1,0 +1,89 @@
+ This program inserts random Strings of length L
+ Into different types of maps as <String, Integer> pairs.
+
+What would you like L to be?: 8
+
+Enter # strings to insert into hashmap.ULLMap: 5000
+class hashmap.ULLMap: 0.11 sec
+
+Enter # strings to insert into your hashmap.MyHashMap: 5000
+class hashmap.MyHashMap: 0.01 sec
+
+Enter # strings to insert into Java's HashMap: 5000
+Java's Built-in HashMap: 0.00 sec
+
+Would you like to try more timed-tests? (y/n)y
+
+Enter # strings to insert into hashmap.ULLMap: 10000
+class hashmap.ULLMap: 0.32 sec
+
+Enter # strings to insert into your hashmap.MyHashMap: 10000
+class hashmap.MyHashMap: 0.02 sec
+
+Enter # strings to insert into Java's HashMap: 10000
+Java's Built-in HashMap: 0.00 sec
+
+//in order results:
+ This program inserts lexicographically increasing Stringsinto Maps as <String, Integer> pairs.
+
+Enter # strings to insert into hashmap.ULLMap: 20000
+class hashmap.ULLMap: 1.84 sec
+
+Enter # strings to insert into hashmap.MyHashMap: 20000
+class hashmap.MyHashMap: 0.04 sec
+
+Enter # strings to insert into Java's HashMap: 20000
+Java's Built-in HashMap: 0.01 sec
+
+Would you like to try more timed-tests? (y/n): y
+
+Enter # strings to insert into hashmap.ULLMap: 50000
+class hashmap.ULLMap: 27.18 sec
+
+Enter # strings to insert into hashmap.MyHashMap: 50000
+class hashmap.MyHashMap: 0.05 sec
+
+Enter # strings to insert into Java's HashMap: 50000
+Java's Built-in HashMap: 0.03 sec
+
+//HashMap - should be used when key value pair should not be in sorted order
+//allows for a null key and values
+//TreeMap - when we require key value pair in some sorted order
+//does not allow for a null key, since the objects we put in a tree map must be
+a comparable
+//if we do compareTo or compare method on null, null key will throw a
+nullpointer exception
+//treeMap saves memory since hashmap uses a contiguous region of memory
+//but tree map should remain balanced to support an average of logrithmic time
+
+//BucketsSpeedTest
+ This program inserts random Strings of length L
+ Into different types of maps as <String, Integer> pairs.
+
+What would you like L to be?: 10
+
+Enter # strings to insert into each map: 30000
+class hashmap.MyHashMapALBuckets: 0.04 sec
+class hashmap.MyHashMapLLBuckets: 0.04 sec
+class hashmap.MyHashMapTSBuckets: 0.03 sec
+class hashmap.MyHashMapHSBuckets: 0.02 sec
+class hashmap.MyHashMapPQBuckets: 0.02 sec
+
+Would you like to try more timed-tests? (y/n)y
+
+Enter # strings to insert into each map: 50000
+class hashmap.MyHashMapALBuckets: 0.06 sec
+class hashmap.MyHashMapLLBuckets: 0.03 sec
+class hashmap.MyHashMapTSBuckets: 0.02 sec
+class hashmap.MyHashMapHSBuckets: 0.03 sec
+class hashmap.MyHashMapPQBuckets: 0.05 sec
+
+Would you like to try more timed-tests? (y/n)y
+
+Enter # strings to insert into each map: 100000
+class hashmap.MyHashMapALBuckets: 0.13 sec
+class hashmap.MyHashMapLLBuckets: 0.07 sec
+class hashmap.MyHashMapTSBuckets: 0.10 sec
+class hashmap.MyHashMapHSBuckets: 0.10 sec
+class hashmap.MyHashMapPQBuckets: 0.06 sec
+

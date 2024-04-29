@@ -229,7 +229,28 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      */
     @Override
     public V remove(K key){
-        return null;
+        V removed = null;
+        if(!containsKey(key)){
+            return null;
+        }
+        //determine the index using the key
+        int index = hashIndex(key, buckets.length);
+        //grab the current bucket using the index
+        Collection<Node> bucket = getBucket(index);
+        //iterate through the nodes of the bucket
+        Iterator<Node> rator = bucket.iterator();
+        while(rator.hasNext()){
+            Node currNode = rator.next();
+            //once we've reached the key in the hashmap
+            if(currNode.key.equals(key)){
+                //save value in a variable to return later
+                removed = currNode.value;
+                //reassign currNode to null;
+                currNode = null;
+            }
+        }
+        //return removed
+        return removed;
     }
     
     /**
@@ -239,7 +260,28 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      */
     @Override
     public V remove(K key, V value){
-        return null;
+        V removed = null;
+        if(!containsKey(key)){
+            return null;
+        }
+        //determine the index using the key
+        int index = hashIndex(key, buckets.length);
+        //grab the current bucket using the index
+        Collection<Node> bucket = getBucket(index);
+        //iterate through the nodes of the bucket
+        Iterator<Node> rator = bucket.iterator();
+        while(rator.hasNext()){
+            Node currNode = rator.next();
+            //once we've reached the key in the hashmap
+            if(currNode.key.equals(key) && currNode.value.equals(value)){
+                //save value in a variable to return later
+                removed = currNode.value;
+                //reassign currNode to null;
+                currNode = null;
+            }
+        }
+        //return removed
+        return removed;
     }
     
     @Override
@@ -257,7 +299,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         Iterator<K> hashIterator = iterator();
         //for each key,
         //grab the current key value pairing from the current buckets
-        // recalulate the proper index using the hashIndex
+        // recalculate the proper index using the hashIndex
         // function, passing in the key and new capacity
         //then insert the
         while(hashIterator.hasNext()){
